@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kashi.dirichlet">
+
+    <!-- Required by Dirichlet SDK -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application>
+        <!-- Godot 插件注册（必需！否则引擎找不到 DirichletPlugin 类） -->
+        <meta-data
+            android:name="org.godotengine.plugin.v2.DirichletAd"
+            android:value="com.kashi.dirichlet.DirichletPlugin" />
+
+        <!-- FileProvider for Dirichlet Ad SDK 4.2.4.8 -->
+        <provider
+            android:name="com.tapsdk.tapad.TapFileProvider"
+            android:authorities="${applicationId}.tapad.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <!-- Dirichlet SDK stub activities (required for ad display) -->
+        <activity
+            android:name="com.tapsdk.tapad.stub.activity.Stub_Portrait_Activity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:launchMode="standard"
+            android:multiprocess="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.tapsdk.tapad.stub.activity.Stub_Landscape_Activity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:launchMode="standard"
+            android:multiprocess="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+    </application>
+</manifest>
