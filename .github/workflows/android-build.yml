@@ -42,7 +42,7 @@ jobs:
           
       # ==================== Android SDK ====================
       - name: Setup Android SDK
-        uses: android/actions/setup-android-sdk@v3
+        uses: android/setup-android-sdk@v3
         with:
           cmdline-tools: latest
           build-tools: 34.0.0
