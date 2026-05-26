@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=2 format=3]
+
+[ext_resource type="FontFile" uid="uid://default_font" path="res://icon.svg" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_default"]
+bg_color = Color(0.12, 0.14, 0.22, 1.0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+corner_radius_bottom_right = 8
+
+[resource]
+default_font_size = 28
+default_font_italic = false
+default_font_color = Color(0.88, 0.85, 0.7, 1.0)
+Button/colors/font_color = Color(0.9, 0.88, 0.75, 1.0)
+Button/colors/font_hover_color = Color(1.0, 1.0, 0.9, 1.0)
+Button/colors/font_pressed_color = Color(1.0, 0.95, 0.8, 1.0)
+Button/colors/font_disabled_color = Color(0.45, 0.45, 0.55, 1.0)
+Button/constants/h_separation = 8
+Button/constants/icon_max_width = 0
+Button/constants/icon_min_width = 0
+Button/font_sizes/font_size = 28
+Button/styles/normal = SubResource("StyleBoxFlat_default")
+Button/styles/hover = SubResource("StyleBoxFlat_default")
+Button/styles/pressed = SubResource("StyleBoxFlat_default")
+Button/styles/disabled = SubResource("StyleBoxFlat_default")
+Button/styles/focus = SubResource("StyleBoxFlat_default")
+Label/colors/font_color = Color(0.88, 0.85, 0.7, 1.0)
+Label/colors/font_outline_color = Color(0.0, 0.0, 0.0, 0.0)
+Label/constants/outline_size = 0
+Label/font_sizes/font_size = 28
+LineEdit/colors/font_color = Color(0.9, 0.88, 0.75, 1.0)
+LineEdit/font_sizes/font_size = 28
+TextEdit/colors/font_color = Color(0.9, 0.88, 0.75, 1.0)
+TextEdit/font_sizes/font_size = 28
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_default")
