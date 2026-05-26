@@ -14,13 +14,19 @@ jobs:
     runs-on: ubuntu-22.04
     
     steps:
-      # 1. 拉取代码
+      # 1. 拉取代码（使用手动git clone绕过actions/checkout的403问题）
       - name: Checkout
-        uses: actions/checkout@v4
+        run: |
+          echo "GITHUB_TOKEN length: ${#GITHUB_TOKEN}"
+          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/pipos52/kashi-simulator.git repo
+          cd repo
+          echo "Checked out: $(git rev-parse --short HEAD)"
+          echo "Files: $(ls -la)"
         
       # 2. 下载 Godot 引擎
       - name: Download Godot
         run: |
+          cd ${{ github.workspace }}/repo
           wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_${GODOT_PLATFORM}.zip -O godot.zip
           unzip -q godot.zip
           chmod +x Godot_v${GODOT_VERSION}-stable_${GODOT_PLATFORM}
@@ -28,54 +34,50 @@ jobs:
       # 3. 下载导出模板
       - name: Download Export Templates
         run: |
+          cd ${{ github.workspace }}/repo
           wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz -O templates.tpz
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           unzip -q templates.tpz -d /tmp/templates
           mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
           
-      # 4. 安装 Java 17 (使用 apt 直接安装，绕过 action 下载问题)
+      # 4. 安装 Java 17
       - name: Setup Java
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1
           java -version
           echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
-          echo "PATH=$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_ENV
+          echo "PATH=\$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_ENV
           
-      # 5. 安装 Android SDK（持久化到 $GITHUB_ENV）
+      # 5. 安装 Android SDK
       - name: Setup Android SDK
         run: |
           mkdir -p ${{ env.ANDROID_HOME }}/cmdline-tools
           cd ${{ env.ANDROID_HOME }}/cmdline-tools
           
-          # 下载 command line tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           unzip -q cmdline-tools.zip
           mv cmdline-tools latest
           
-          # 添加到PATH并安装SDK组件
-          export PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin
+          export PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin
           
-          # 接受协议
           yes | sdkmanager --licenses > /dev/null 2>&1 || true
           
-          # 安装必要组件
           sdkmanager --install \
             "platforms;android-34" \
             "build-tools;34.0.0" \
             "ndk;26.1.10909125" \
             "platform-tools"
             
-          # 持久化 ANDROID_HOME
           echo "ANDROID_HOME=${{ env.ANDROID_HOME }}" >> $GITHUB_ENV
-          echo "PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools" >> $GITHUB_ENV
+          echo "PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools" >> $GITHUB_ENV
           
-          # 验证
           sdkmanager --list_installed
           
       # 6. 生成调试密钥库
       - name: Create Debug Keystore
         run: |
+          cd ${{ github.workspace }}/repo
           keytool -genkey -v -keystore debug.keystore \
             -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass android -keypass android \
@@ -84,26 +86,28 @@ jobs:
       # 7. 检查项目结构
       - name: Check Project
         run: |
+          cd ${{ github.workspace }}/repo
           echo "=== Project root ==="
           ls -la
           echo ""
           echo "=== Android folder ==="
           ls -la android/ 2>/dev/null || echo "No android folder"
           echo ""
-          echo "=== Android build folder ==="
-          ls -la android/build/ 2>/dev/null || echo "No android/build folder"
+          echo "=== export_presets.cfg ==="
+          head -20 export_presets.cfg 2>/dev/null || echo "No export_presets"
           
       # 8. 构建 APK
       - name: Build APK
         run: |
+          cd ${{ github.workspace }}/repo
           export ANDROID_HOME=${{ env.ANDROID_HOME }}
           export JAVA_HOME=${{ env.JAVA_HOME }}
-          export PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
+          export PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
           
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "JAVA_HOME=$JAVA_HOME"
+          echo "ANDROID_HOME=\$ANDROID_HOME"
+          echo "JAVA_HOME=\$JAVA_HOME"
+          echo "Workspace: ${{ github.workspace }}"
           
-          # 检查是否有 Gradle 构建
           if [ -f "android/build/gradlew" ]; then
             echo "=== Building with Gradle ==="
             cd android/build
@@ -111,7 +115,7 @@ jobs:
             ./gradlew assembleDebug --no-daemon 2>&1 | tail -80
           else
             echo "=== Building with Godot headless ==="
-            cd ${{ github.workspace }}
+            mkdir -p android/build
             ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} \
               --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk
           fi
@@ -128,5 +132,5 @@ jobs:
           name: godot-android-apk
           path: |
             **/*.apk
-            android/build/app/build/outputs/apk/debug/*.apk
-          retention-days: 7
+            repo/android/build/*.apk
+            repo/android/build/app/build/outputs/apk/debug/*.apk
