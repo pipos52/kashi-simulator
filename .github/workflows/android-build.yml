@@ -1,17 +1,14 @@
 name: Build Godot Android APK
-
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
-
 env:
   GODOT_VERSION: '4.6'
   GODOT_PLATFORM: 'linux.x86_64'
   ANDROID_HOME: '/opt/android-sdk'
-
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -44,7 +41,7 @@ jobs:
           java -version
           echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
           echo "PATH=$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_ENV
-
+          
       # 5. 安装 Android SDK（持久化到 $GITHUB_ENV）
       - name: Setup Android SDK
         run: |
@@ -116,7 +113,7 @@ jobs:
             echo "=== Building with Godot headless ==="
             cd ${{ github.workspace }}
             ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} \
-              --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk 2>&1 | tail -50
+              --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk
           fi
           
           echo ""
@@ -133,4 +130,3 @@ jobs:
             **/*.apk
             android/build/app/build/outputs/apk/debug/*.apk
           retention-days: 7
-          continue-on-error: true
