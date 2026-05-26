@@ -1,0 +1,383 @@
+[gd_scene format=3 uid="uid://battle002"]
+
+[ext_resource type="Script" path="res://scripts/games/battle/battle_gui.gd" id="1_battle_gui"]
+[ext_resource type="Script" path="res://scripts/games/battle/battle_manager.gd" id="2_battle_mgr"]
+
+[node name="BattleScene" type="Control"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_battle_gui")
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("2_battle_mgr")
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.08, 0.15, 1.0)
+
+[node name="TopBar" type="Control" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="HBox" type="HBoxContainer" parent="TopBar"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="SettingsBtn" type="Button" parent="TopBar/HBox"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 2
+text = "[=]"
+
+[node name="TitleLbl" type="Label" parent="TopBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "决斗中"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoundBtn" type="Button" parent="TopBar/HBox"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 2
+text = "[>]"
+
+[node name="EnemyArea" type="Control" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 66.0
+offset_bottom = 506.0
+grow_horizontal = 2
+
+[node name="EnemyStats" type="HBoxContainer" parent="EnemyArea"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="EHPLbl" type="Label" parent="EnemyArea/EnemyStats"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "HP: 20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EDeckLbl" type="Label" parent="EnemyArea/EnemyStats"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "牌堆: 15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EGraveLbl" type="Label" parent="EnemyArea/EnemyStats"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "墓地: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="EnemyArea/EnemyStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="EField" type="GridContainer" parent="EnemyArea"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+columns = 4
+
+[node name="ESlot0" type="PanelContainer" parent="EnemyArea/EField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="EnemyArea/EField/ESlot0"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="EnemyArea/EField/ESlot0/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ESlot1" type="PanelContainer" parent="EnemyArea/EField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="EnemyArea/EField/ESlot1"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="EnemyArea/EField/ESlot1/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ESlot2" type="PanelContainer" parent="EnemyArea/EField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="EnemyArea/EField/ESlot2"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="EnemyArea/EField/ESlot2/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ESlot3" type="PanelContainer" parent="EnemyArea/EField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="EnemyArea/EField/ESlot3"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="EnemyArea/EField/ESlot3/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LogArea" type="PanelContainer" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 512.0
+offset_bottom = 632.0
+grow_horizontal = 2
+
+[node name="LogLbl" type="RichTextLabel" parent="LogArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+
+[node name="PlayerArea" type="Control" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 638.0
+offset_bottom = 1078.0
+grow_horizontal = 2
+
+[node name="PField" type="GridContainer" parent="PlayerArea"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -48.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+columns = 4
+
+[node name="PSlot0" type="PanelContainer" parent="PlayerArea/PField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="PlayerArea/PField/PSlot0"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="PlayerArea/PField/PSlot0/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PSlot1" type="PanelContainer" parent="PlayerArea/PField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="PlayerArea/PField/PSlot1"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="PlayerArea/PField/PSlot1/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PSlot2" type="PanelContainer" parent="PlayerArea/PField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="PlayerArea/PField/PSlot2"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="PlayerArea/PField/PSlot2/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PSlot3" type="PanelContainer" parent="PlayerArea/PField"]
+custom_minimum_size = Vector2(248, 347)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="PlayerArea/PField/PSlot3"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Lbl" type="Label" parent="PlayerArea/PField/PSlot3/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "-"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerStats" type="HBoxContainer" parent="PlayerArea"]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="PHPLbl" type="Label" parent="PlayerArea/PlayerStats"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "HP: 20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PDeckLbl" type="Label" parent="PlayerArea/PlayerStats"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "牌堆: 12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PGraveLbl" type="Label" parent="PlayerArea/PlayerStats"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "墓地: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="PlayerArea/PlayerStats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="HandArea" type="ScrollContainer" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 1084.0
+offset_bottom = 1444.0
+grow_horizontal = 2
+horizontal_scroll_mode = 2
+
+[node name="HandBox" type="HBoxContainer" parent="HandArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="BottomBar" type="Control" parent="."]
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="BottomBar"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="EndTurnBtn" type="Button" parent="BottomBar/HBox"]
+custom_minimum_size = Vector2(160, 70)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "结束回合"
+
+[node name="Spacer" type="Control" parent="BottomBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="EnergyLbl" type="Label" parent="BottomBar/HBox"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "能量: 5/10"
+horizontal_alignment = 1
+vertical_alignment = 1
