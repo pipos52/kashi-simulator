@@ -1,0 +1,16 @@
+# Godot-specific
+.godot/
+android/build/
+android/.gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Logs
+*.log
+
+# Backup files
+*.bak
