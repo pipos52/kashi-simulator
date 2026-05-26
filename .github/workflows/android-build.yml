@@ -8,7 +8,6 @@ on:
 env:
   GODOT_VERSION: '4.6'
   GODOT_PLATFORM: 'linux.x86_64'
-  ANDROID_HOME: '/opt/android-sdk'
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -39,39 +38,64 @@ jobs:
           unzip -q templates.tpz -d /tmp/templates
           mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
           
-      # 4. 安装 Java 17（强制安装，替换默认Java11）
+      # 4. 安装 Java 17
       - name: Setup Java
         run: |
+          # 安装 Java 17
           sudo apt-get update -qq
-          sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1 || sudo apt-get install -y openjdk-17-jdk-headless > /dev/null 2>&1 || true
-          which java && java -version 2>&1 | head -3
-          /usr/lib/jvm/java-17-openjdk-amd64/bin/java -version 2>&1 | head -3 || true
-          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
-          echo "PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:\$PATH" >> $GITHUB_ENV
+          sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1 || true
           
-      # 5. 安装 Android SDK（使用 shell 内建命令）
+          echo "=== Java Version Check ==="
+          echo "Default java:"
+          java -version 2>&1 | head -3
+          echo ""
+          echo "Java 17 path:"
+          /usr/lib/jvm/java-17-openjdk-amd64/bin/java -version 2>&1 | head -3
+          
+          # 设置环境变量 - 使用完整PATH
+          JAVA_HOME_PATH="/usr/lib/jvm/java-17-openjdk-amd64"
+          echo "JAVA_HOME=${JAVA_HOME_PATH}" >> $GITHUB_ENV
+          # 直接设置完整PATH，添加Java 17到前面
+          echo "PATH=${JAVA_HOME_PATH}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> $GITHUB_ENV
+          
+      # 5. 安装 Android SDK
       - name: Setup Android SDK
         run: |
-          export ANDROID_HOME=/opt/android-sdk
-          command mkdir -p $ANDROID_HOME/cmdline-tools
-          cd $ANDROID_HOME/cmdline-tools
+          ANDROID_SDK_ROOT="/opt/android-sdk"
+          
+          # 创建目录 - 使用完整路径
+          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+          cd $ANDROID_SDK_ROOT/cmdline-tools
+          
+          # 下载命令行工具
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           unzip -q cmdline-tools.zip
-          command mv cmdline-tools latest
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+          mv cmdline-tools latest
+          
+          # 设置PATH以包含sdkmanager
+          export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
+          
+          # 接受许可
           yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          
+          # 安装必要的组件
           sdkmanager --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
-          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools" >> $GITHUB_ENV
-          sdkmanager --list_installed 2>&1 | head -10
-        
+          
+          # 设置环境变量
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+          
+          # 列出已安装的组件
+          echo "=== Installed SDK Components ==="
+          sdkmanager --list_installed 2>&1 | head -15
+         
       # 6. 生成调试密钥库
       - name: Create Debug Keystore
         run: |
           cd ${{ github.workspace }}/repo
           keytool -genkey -v -keystore debug.keystore -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Debug, O=Debug, C=US"
           ls -la debug.keystore
-            
+             
       # 7. 检查项目结构
       - name: Check Project
         run: |
@@ -92,14 +116,25 @@ jobs:
       - name: Build APK
         run: |
           cd ${{ github.workspace }}/repo
-          export ANDROID_HOME=${{ env.ANDROID_HOME }}
-          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-          export PATH=$JAVA_HOME/bin:$PATH
+          
+          # 设置环境变量
+          export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+          export ANDROID_HOME="/opt/android-sdk"
+          export PATH="$JAVA_HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+          
+          echo "=== Environment ==="
           echo "JAVA_HOME=$JAVA_HOME"
           java -version 2>&1 | head -3
+          echo ""
           echo "ANDROID_HOME=$ANDROID_HOME"
+          
+          # 创建输出目录
           mkdir -p android/build
+          
+          # 执行 Godot 导出
+          echo "=== Building APK ==="
           ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk 2>&1
+          
           echo ""
           echo "=== Build artifacts ==="
           find . -name "*.apk" -type f 2>/dev/null
