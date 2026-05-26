@@ -114,7 +114,7 @@ jobs:
             echo "=== Building with Godot headless ==="
             cd ${{ github.workspace }}
             ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} \
-              --headless --export-release "卡师模拟器" android/build/卡师模拟器.apk 2>&1 | tail -50
+              --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk 2>&1 | tail -50
           fi
           
           echo ""
