@@ -36,13 +36,15 @@ jobs:
           unzip -q templates.tpz -d /tmp/templates
           mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
           
-      # 4. 安装 Java 17
+      # 4. 安装 Java 17 (使用 apt 直接安装，绕过 action 下载问题)
       - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1
+          java -version
+          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+          echo "PATH=$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_ENV
+
       # 5. 安装 Android SDK（持久化到 $GITHUB_ENV）
       - name: Setup Android SDK
         run: |
