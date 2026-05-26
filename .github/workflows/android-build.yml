@@ -14,11 +14,10 @@ jobs:
     runs-on: ubuntu-22.04
     
     steps:
-      # 1. 拉取代码（使用手动git clone绕过actions/checkout的403问题）
+      # 1. 拉取代码
       - name: Checkout
         run: |
-          echo "GITHUB_TOKEN length: ${#GITHUB_TOKEN}"
-          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/pipos52/kashi-simulator.git repo
+          git clone --depth=1 https://github.com/pipos52/kashi-simulator.git repo
           cd repo
           echo "Checked out: $(git rev-parse --short HEAD)"
           echo "Files: $(ls -la)"
@@ -40,48 +39,38 @@ jobs:
           unzip -q templates.tpz -d /tmp/templates
           mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
           
-      # 4. 安装 Java 17
+      # 4. 安装 Java 17（强制安装，替换默认Java11）
       - name: Setup Java
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1
-          java -version
+          sudo apt-get install -y openjdk-17-jdk > /dev/null 2>&1 || sudo apt-get install -y openjdk-17-jdk-headless > /dev/null 2>&1 || true
+          which java && java -version 2>&1 | head -3
+          /usr/lib/jvm/java-17-openjdk-amd64/bin/java -version 2>&1 | head -3 || true
           echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
-          echo "PATH=\$PATH:/usr/lib/jvm/java-17-openjdk-amd64/bin" >> $GITHUB_ENV
+          echo "PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:\$PATH" >> $GITHUB_ENV
           
-      # 5. 安装 Android SDK
+      # 5. 安装 Android SDK（使用 shell 内建命令）
       - name: Setup Android SDK
         run: |
-          mkdir -p ${{ env.ANDROID_HOME }}/cmdline-tools
-          cd ${{ env.ANDROID_HOME }}/cmdline-tools
-          
+          export ANDROID_HOME=/opt/android-sdk
+          command mkdir -p $ANDROID_HOME/cmdline-tools
+          cd $ANDROID_HOME/cmdline-tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           unzip -q cmdline-tools.zip
-          mv cmdline-tools latest
-          
-          export PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin
-          
+          command mv cmdline-tools latest
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          
-          sdkmanager --install \
-            "platforms;android-34" \
-            "build-tools;34.0.0" \
-            "ndk;26.1.10909125" \
-            "platform-tools"
-            
-          echo "ANDROID_HOME=${{ env.ANDROID_HOME }}" >> $GITHUB_ENV
-          echo "PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools" >> $GITHUB_ENV
-          
-          sdkmanager --list_installed
-          
+          sdkmanager --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools" >> $GITHUB_ENV
+          sdkmanager --list_installed 2>&1 | head -10
+        
       # 6. 生成调试密钥库
       - name: Create Debug Keystore
         run: |
           cd ${{ github.workspace }}/repo
-          keytool -genkey -v -keystore debug.keystore \
-            -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass android -keypass android \
-            -dname "CN=Debug, O=Debug, C=US"
+          keytool -genkey -v -keystore debug.keystore -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Debug, O=Debug, C=US"
+          ls -la debug.keystore
             
       # 7. 检查项目结构
       - name: Check Project
@@ -90,39 +79,31 @@ jobs:
           echo "=== Project root ==="
           ls -la
           echo ""
-          echo "=== Android folder ==="
+          echo "=== export_presets.cfg ==="
+          cat export_presets.cfg | head -15
+          echo ""
+          echo "=== android folder ==="
           ls -la android/ 2>/dev/null || echo "No android folder"
           echo ""
-          echo "=== export_presets.cfg ==="
-          head -20 export_presets.cfg 2>/dev/null || echo "No export_presets"
+          echo "=== project.godot ==="
+          head -5 project.godot
           
       # 8. 构建 APK
       - name: Build APK
         run: |
           cd ${{ github.workspace }}/repo
           export ANDROID_HOME=${{ env.ANDROID_HOME }}
-          export JAVA_HOME=${{ env.JAVA_HOME }}
-          export PATH=\$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
-          
-          echo "ANDROID_HOME=\$ANDROID_HOME"
-          echo "JAVA_HOME=\$JAVA_HOME"
-          echo "Workspace: ${{ github.workspace }}"
-          
-          if [ -f "android/build/gradlew" ]; then
-            echo "=== Building with Gradle ==="
-            cd android/build
-            chmod +x gradlew
-            ./gradlew assembleDebug --no-daemon 2>&1 | tail -80
-          else
-            echo "=== Building with Godot headless ==="
-            mkdir -p android/build
-            ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} \
-              --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk
-          fi
-          
+          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+          export PATH=$JAVA_HOME/bin:$PATH
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version 2>&1 | head -3
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          mkdir -p android/build
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} --headless --export-release "KashiAndroid" android/build/KashiAndroid.apk 2>&1
           echo ""
           echo "=== Build artifacts ==="
           find . -name "*.apk" -type f 2>/dev/null
+          ls -la android/build/ 2>/dev/null || true
           
       # 9. 上传 APK
       - name: Upload APK
@@ -131,6 +112,5 @@ jobs:
         with:
           name: godot-android-apk
           path: |
-            **/*.apk
+            repo/**/*.apk
             repo/android/build/*.apk
-            repo/android/build/app/build/outputs/apk/debug/*.apk
