@@ -5,7 +5,12 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:
+  workflow_dispatch:  # Manual trigger
+  inputs:
+    debug:
+      description: Debug mode
+      default: "false"
+      required: false
 
 env:
   GODOT_VERSION: '4.6'
