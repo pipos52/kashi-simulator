@@ -10,124 +10,118 @@ on:
 env:
   GODOT_VERSION: '4.6'
   GODOT_PLATFORM: 'linux.x86_64'
+  ANDROID_HOME: '/opt/android-sdk'
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     
     steps:
-      # ==================== 1. Checkout ====================
+      # 1. 拉取代码
       - name: Checkout
         uses: actions/checkout@v4
         
-      # ==================== 2. Godot 引擎 ====================
+      # 2. 下载 Godot 引擎
       - name: Download Godot
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_${GODOT_PLATFORM}.zip -O godot.zip
           unzip -q godot.zip
           chmod +x Godot_v${GODOT_VERSION}-stable_${GODOT_PLATFORM}
-          ls -la Godot*
           
+      # 3. 下载导出模板
       - name: Download Export Templates
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz -O templates.tpz
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           unzip -q templates.tpz -d /tmp/templates
           mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          echo \"Templates installed\"
-          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
           
-      # ==================== 3. Java 17 ====================
-      - name: Setup Java 17
+      # 4. 安装 Java 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           
-      - name: Verify Java
+      # 5. 安装 Android SDK（持久化到 $GITHUB_ENV）
+      - name: Setup Android SDK
         run: |
-          java -version
-          echo "JAVA_HOME=$JAVA_HOME"
+          mkdir -p ${{ env.ANDROID_HOME }}/cmdline-tools
+          cd ${{ env.ANDROID_HOME }}/cmdline-tools
           
-      # ==================== 4. 手动安装 Android SDK ====================
-      - name: Download Android Command Line Tools
-        run: |
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          cd $HOME/android-sdk/cmdline-tools
+          # 下载 command line tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           unzip -q cmdline-tools.zip
           mv cmdline-tools latest
-          ls -la $HOME/android-sdk/cmdline-tools/latest/
           
-      - name: Install Android SDK Components
-        run: |
-          export ANDROID_HOME=$HOME/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          # 添加到PATH并安装SDK组件
+          export PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin
           
-          yes | sdkmanager --licenses 2>/dev/null || true
+          # 接受协议
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
           
-          echo \"=== Installing Android SDK packages ===\"
+          # 安装必要组件
           sdkmanager --install \
             "platforms;android-34" \
             "build-tools;34.0.0" \
             "ndk;26.1.10909125" \
-            "platform-tools" \
-            2>&1 | tail -20
+            "platform-tools"
             
-          echo \"=== Installed packages ===\"
+          # 持久化 ANDROID_HOME
+          echo "ANDROID_HOME=${{ env.ANDROID_HOME }}" >> $GITHUB_ENV
+          echo "PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools" >> $GITHUB_ENV
+          
+          # 验证
           sdkmanager --list_installed
           
-      - name: Verify Android SDK
+      # 6. 生成调试密钥库
+      - name: Create Debug Keystore
         run: |
-          export ANDROID_HOME=$HOME/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-          echo \"ANDROID_HOME=$ANDROID_HOME\"
-          sdkmanager --list_installed | grep -E \"platforms|build-tools|ndk\"
-          
-      # ==================== 5. 生成密钥库 ====================
-      - name: Create debug keystore
+          keytool -genkey -v -keystore debug.keystore \
+            -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android -keypass android \
+            -dname "CN=Debug, O=Debug, C=US"
+            
+      # 7. 检查项目结构
+      - name: Check Project
         run: |
-          keytool -genkey -v -keystore debug.keystore -alias debugkey -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass android -keypass android -dname "CN=Debug, O=Debug, C=US"
-          ls -la debug.keystore
-          
-      # ==================== 6. 构建 APK ====================
-      - name: Build Debug APK
-        id: build
-        run: |
-          export ANDROID_HOME=$HOME/android-sdk
-          export JAVA_HOME=/opt/java/openjdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
-          
-          echo \"=== Project structure ===\"
+          echo "=== Project root ==="
           ls -la
+          echo ""
+          echo "=== Android folder ==="
+          ls -la android/ 2>/dev/null || echo "No android folder"
+          echo ""
+          echo "=== Android build folder ==="
+          ls -la android/build/ 2>/dev/null || echo "No android/build folder"
           
-          echo \"=== Checking for custom Android build ===\"
-          if [ -d \"android/build\" ]; then
-            echo \"Custom Android build directory found\"
-            ls -la android/
-            ls -la android/build/ 2>/dev/null || true
-          fi
+      # 8. 构建 APK
+      - name: Build APK
+        run: |
+          export ANDROID_HOME=${{ env.ANDROID_HOME }}
+          export JAVA_HOME=${{ env.JAVA_HOME }}
+          export PATH=$PATH:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
           
-          # 复制密钥
-          cp debug.keystore android/build/ 2>/dev/null || true
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "JAVA_HOME=$JAVA_HOME"
           
-          # 尝试使用 Gradle 构建（如果存在）
-          if [ -f \"android/build/gradlew\" ]; then
-            echo \"=== Building with Gradle ===\"
+          # 检查是否有 Gradle 构建
+          if [ -f "android/build/gradlew" ]; then
+            echo "=== Building with Gradle ==="
             cd android/build
             chmod +x gradlew
-            ./gradlew assembleDebug --no-daemon 2>&1 | tail -100
-            cd ../..
+            ./gradlew assembleDebug --no-daemon 2>&1 | tail -80
           else
-            echo \"=== Building with Godot headless ===\"
-            ./Godot_v${GODOT_VERSION}-stable_${GODOT_PLATFORM} --headless --export-release "Android" build/output.apk 2>&1 | tail -50
+            echo "=== Building with Godot headless ==="
+            cd ${{ github.workspace }}
+            ./Godot_v${{ env.GODOT_VERSION }}-stable_${{ env.GODOT_PLATFORM }} \
+              --headless --export-release "Android" output.apk 2>&1 | tail -50
           fi
           
-          echo \"=== Searching for APK files ===\"
-          find . -name \"*.apk\" -type f 2>/dev/null
+          echo ""
+          echo "=== Build artifacts ==="
+          find . -name "*.apk" -type f 2>/dev/null
           
-      # ==================== 7. 上传产物 ====================
+      # 9. 上传 APK
       - name: Upload APK
         if: always()
         uses: actions/upload-artifact@v4
@@ -136,12 +130,5 @@ jobs:
           path: |
             **/*.apk
             android/build/app/build/outputs/apk/debug/*.apk
-            build/*.apk
           retention-days: 7
-          
-      - name: Build Summary
-        run: |
-          echo \"### Build Results\" >> $GITHUB_STEP_SUMMARY
-          echo \"\`\`\`\" >> $GITHUB_STEP_SUMMARY
-          find . -name \"*.apk\" -type f 2>/dev/null | head -10 >> $GITHUB_STEP_SUMMARY || echo \"No APK found\" >> $GITHUB_STEP_SUMMARY
-          echo \"\`\`\`\" >> $GITHUB_STEP_SUMMARY
+          continue-on-error: true
