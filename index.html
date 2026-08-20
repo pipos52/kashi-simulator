@@ -84,6 +84,25 @@ body {
   box-shadow: 0 12px 40px rgba(233, 69, 96, 0.6);
 }
 .download-hint { margin-top: 12px; font-size: 14px; color: #8899bb; }
+/* TapTap 按钮 */
+.taptap-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #00b4ff, #3dd7ff);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(0, 180, 255, 0.35);
+  transition: all 0.3s;
+}
+.taptap-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 180, 255, 0.55);
+}
 /* 特性网格 */
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 24px 0; }
 .feature {
@@ -135,6 +154,8 @@ footer a { color: #d4a574; text-decoration: none; }
   <div class="download-section">
     <a class="download-btn" href="https://github.com/pipos52/kashi-simulator/releases/download/v1.0.0/kssp.apk" id="downloadLink">📥 立即下载 APK</a>
     <div class="download-hint">Android 安卓包 · 点击下载 · 更新于 2026-08-21</div>
+    <br>
+    <a class="taptap-btn" href="https://tap.cn/zxP9x2Vm" target="_blank">🟠 TapTap 下载</a>
   </div>
 
   <div class="card">
