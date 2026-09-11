@@ -235,46 +235,109 @@ body {
   .feature-track { gap: 12px; }
 }
 
-/* ===== 视频 ===== */
-.video-wrap {
-  border: 4px solid #2b2b2b;
-  box-shadow: 6px 6px 0 rgba(43,43,43,0.6);
-  background: #000;
-  overflow: hidden;
+/* ===== 媒体轮播（视频 + 截图）===== */
+.media-section {
+  margin: 20px 0 48px 0;
 }
-.video-wrap video {
+.media-section h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 18px;
+  color: #2b2b2b;
+  letter-spacing: 2px;
+}
+.media-viewport {
+  overflow: hidden;
+  padding: 20px 0;
+  min-height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0ead6;
+  border: 4px solid #2b2b2b;
+  box-shadow: 8px 8px 0 #2b2b2b;
+}
+.media-item {
+  display: none;
+  width: 92%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.media-item.active {
+  display: block;
+}
+.media-item video {
   display: block;
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: contain;
   background: #000;
+  border: 3px solid #2b2b2b;
 }
-/* ===== 截图 ===== */
-.screenshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-.shot {
-  border: 4px solid #2b2b2b;
-  box-shadow: 6px 6px 0 rgba(43,43,43,0.6);
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.shot img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  object-position: top;
+.media-item img {
   display: block;
+  width: 100%;
+  max-height: 560px;
+  object-fit: contain;
   background: #1a1a1a;
+  border: 3px solid #2b2b2b;
 }
-.shot .caption {
-  padding: 10px 12px;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #2b2b2b;
+.media-caption {
   text-align: center;
-  border-top: 3px solid #2b2b2b;
-  background: #fff7e0;
+  font-size: 14px;
+  color: #4a4a4a;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.media-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.media-thumb {
+  width: 84px;
+  height: 54px;
+  border: 3px solid #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #2b2b2b;
+  padding: 0;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+.media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.media-thumb .thumb-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+.media-thumb.active {
+  border-color: #2b2b2b;
+  transform: scale(1.12);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.media-thumb:hover {
+  transform: scale(1.08);
+}
+.media-thumb.active:hover {
+  transform: scale(1.12);
+}
+@media (max-width: 640px) {
+  .media-viewport { min-height: 260px; padding: 12px 0; }
+  .media-item { width: 96%; }
+  .media-thumb { width: 62px; height: 40px; border-width: 2px; }
 }
 /* ===== 特色列表 ===== */
 .pixel-card ul { padding-left: 28px; }
@@ -360,6 +423,110 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
       <div class="feature-dot" data-target="3"></div>
     </div>
   </div>
+    <div class="media-section" id="mediaCarousel">
+      <h2>🎬 战斗实录 & 游戏截图</h2>
+      <div class="media-viewport">
+        <div class="media-item active" data-idx="0">
+          <video controls autoplay muted loop playsinline preload="metadata">
+            <source src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/battle-demo.mp4" type="video/mp4">
+          </video>
+          <div class="media-caption">⚔️ 战斗实录</div>
+        </div>
+        <div class="media-item" data-idx="1">
+          <img src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/screenshot-craft.jpg" alt="制卡界面">
+          <div class="media-caption">🎴 制卡界面</div>
+        </div>
+        <div class="media-item" data-idx="2">
+          <img src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/screenshot-explore.jpg" alt="探索界面">
+          <div class="media-caption">🌍 探索界面</div>
+        </div>
+      </div>
+      <div class="media-thumbs" id="mediaThumbs">
+        <button class="media-thumb active" data-target="0" title="战斗实录">
+          <img src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/screenshot-craft.jpg" alt="" style="opacity:0.4;">
+          <div class="thumb-icon">▶️</div>
+        </button>
+        <button class="media-thumb" data-target="1" title="制卡界面">
+          <img src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/screenshot-craft.jpg" alt="">
+        </button>
+        <button class="media-thumb" data-target="2" title="探索界面">
+          <img src="https://github.com/pipos52/kashi-simulator/releases/download/v1.2/screenshot-explore.jpg" alt="">
+        </button>
+      </div>
+    </div>
+<script>
+(function(){
+  var carousel = document.getElementById('mediaCarousel');
+  var items = carousel.querySelectorAll('.media-item');
+  var thumbs = carousel.querySelectorAll('.media-thumb');
+  var N = items.length;
+  var idx = 0;
+  var timer = null;
+  var pausedUntil = 0;
+  var lastPaused = null;
+
+  function apply(newIdx) {
+    var prevItem = items[idx];
+    if (prevItem) {
+      var v = prevItem.querySelector('video');
+      if (v && !v.paused) { v.pause(); }
+    }
+    idx = newIdx;
+    items.forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+    thumbs.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+    // 恢复新视频播放（若之前是暂停状态才恢复）
+    if (!lastPaused) {
+      var v = items[idx].querySelector('video');
+      if (v) { v.play().catch(function(){}); }
+    }
+  }
+
+  function tick() {
+    if (Date.now() < pausedUntil) return;
+    apply(idx + 1);
+    if (idx >= N) { setTimeout(function() { apply(0); }, 350); }
+  }
+
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(tick, 5000);
+    // 启动时自动播放第一个视频
+    var v = items[0].querySelector('video');
+    if (v) { v.play().catch(function(){}); }
+  }
+  function pauseFor(ms) {
+    lastPaused = Date.now();
+    pausedUntil = Date.now() + ms;
+    // 立即暂停当前视频
+    var v = items[idx].querySelector('video');
+    if (v && !v.paused) v.pause();
+  }
+
+  carousel.addEventListener('mouseenter', function() { pauseFor(10000); });
+  carousel.addEventListener('mouseleave', function() {
+    // 离开时清除暂停标记（若暂停时间未到则继续暂停）
+  });
+  carousel.addEventListener('click', function() { pauseFor(15000); });
+  thumbs.forEach(function(d) {
+    d.addEventListener('click', function(e) {
+      e.stopPropagation();
+      apply(parseInt(d.dataset.target, 10));
+      pauseFor(8000);
+    });
+  });
+
+  // 视频自身点击（播放/暂停）也算交互
+  carousel.querySelectorAll('video').forEach(function(v) {
+    v.addEventListener('click', function(e) {
+      e.stopPropagation();
+      pauseFor(20000);
+      // 5 秒后如果没操作，自动恢复轮播（不重置视频播放）
+    });
+  });
+
+  start();
+})();
+</script>
 <footer>
   <div>© 2026 pipos工作室 · 卡师模拟器官方站点</div>
   <div class="social-links">
