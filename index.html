@@ -153,18 +153,31 @@ body {
 }
 .feature .desc { font-size: 13px; color: #555; line-height: 1.6; font-weight: 500; }
 /* ===== 截图 ===== */
-.screenshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.screenshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 .shot {
-  aspect-ratio: 16/10;
-  background: #f3f3f3;
   border: 4px solid #2b2b2b;
   box-shadow: 6px 6px 0 rgba(43,43,43,0.6);
+  background: #fff;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #999;
-  font-size: 14px;
+  flex-direction: column;
+  overflow: hidden;
+}
+.shot img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  background: #1a1a1a;
+}
+.shot .caption {
+  padding: 10px 12px;
+  font-size: 13.5px;
   font-weight: 700;
+  color: #2b2b2b;
+  text-align: center;
+  border-top: 3px solid #2b2b2b;
+  background: #fff7e0;
 }
 /* ===== 特色列表 ===== */
 .pixel-card ul { padding-left: 28px; }
@@ -257,9 +270,14 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
   <div class="pixel-card">
     <h2>📸 游戏截图</h2>
     <div class="screenshots">
-      <div class="shot">🎴 制卡界面（待补充）</div>
-      <div class="shot">⚔️ 战斗界面（待补充）</div>
-      <div class="shot">🏹 探索界面（待补充）</div>
+      <div class="shot">
+        <img src="screenshot-craft.jpg" alt="制卡界面">
+        <div class="caption">🎴 制卡界面</div>
+      </div>
+      <div class="shot">
+        <img src="screenshot-explore.jpg" alt="探索界面">
+        <div class="caption">🏹 探索界面</div>
+      </div>
     </div>
   </div>
 
