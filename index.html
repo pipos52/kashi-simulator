@@ -126,55 +126,65 @@ body {
   letter-spacing: 2px;
 }
 .pixel-card p { line-height: 1.9; font-size: 15px; font-weight: 500; }
-/* ===== 特性轮播 ===== */
+/* ===== 特性轮播（多卡可见，中间高亮）===== */
 .features {
   margin: 28px 0;
-  background: #fff;
+  background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
   border: 4px solid #2b2b2b;
   box-shadow: 8px 8px 0 #2b2b2b;
+  padding: 24px 0 14px;
   overflow: hidden;
 }
 .feature-viewport {
   overflow: hidden;
-  position: relative;
+  padding: 12px 0 18px;
 }
 .feature-track {
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 18px;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  align-items: stretch;
 }
 .feature {
-  flex: 0 0 100%;
+  flex: 0 0 62%;
   box-sizing: border-box;
-  padding: 36px 28px 30px;
+  padding: 22px 20px 20px;
   text-align: center;
+  background: #fff;
+  border: 3px solid #2b2b2b;
+  box-shadow: 4px 4px 0 #2b2b2b;
+  opacity: 0.5;
+  transform: scale(0.88);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
 }
-.feature .icon { font-size: 60px; margin-bottom: 18px; }
+.feature.active {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 6px 6px 0 #2b2b2b;
+}
+.feature .icon { font-size: 46px; margin-bottom: 12px; }
 .feature .title {
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 900;
   color: #2b2b2b;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: inline-block;
-  padding: 4px 14px;
+  padding: 3px 12px;
   background: #7ed321;
-  border: 3px solid #2b2b2b;
+  border: 2px solid #2b2b2b;
 }
 .feature .desc {
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 13.5px;
+  line-height: 1.7;
   color: #4a4a4a;
   font-weight: 500;
-  max-width: 620px;
-  margin: 0 auto;
 }
 .feature-dots {
   display: flex;
   justify-content: center;
   gap: 12px;
-  padding: 12px;
-  background: #fff7e0;
-  border-top: 3px solid #2b2b2b;
+  padding-top: 6px;
 }
 .feature-dot {
   width: 14px;
@@ -183,9 +193,20 @@ body {
   border: 2px solid #2b2b2b;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
-.feature-dot.active { background: #ff6b57; }
+.feature-dot.active {
+  background: #ff6b57;
+  transform: scale(1.15);
+}
+/* 移动端 */
+@media (max-width: 600px) {
+  .feature { flex: 0 0 88%; padding: 16px 12px 14px; }
+  .feature .icon { font-size: 36px; margin-bottom: 8px; }
+  .feature .title { font-size: 16px; padding: 2px 10px; }
+  .feature .desc { font-size: 12.5px; line-height: 1.6; }
+  .feature-track { gap: 12px; }
+}
 
 /* ===== 视频 ===== */
 .video-wrap {
@@ -293,66 +314,23 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
     </p>
   </div>
 
-  <div class="features">
-    <div class="feature">
-      <div class="icon">🃏</div>
-      <div class="title">自由制卡</div>
-      <div class="desc">五大纹路维度自由组合，创造独一无二的专属卡牌</div>
-    </div>
-    <div class="feature">
-      <div class="icon">⚔️</div>
-      <div class="title">策略对战</div>
-      <div class="desc">能量管理 + 场地布局 + 元素克制，深度战术博弈</div>
-    </div>
-    <div class="feature">
-      <div class="icon">🏹</div>
-      <div class="title">野外探索</div>
-      <div class="desc">收集材料，解锁更多制卡配方与隐藏效果</div>
-    </div>
-    <div class="feature">
-      <div class="icon">💎</div>
-      <div class="title">品质系统</div>
-      <div class="desc">废品到完美五档品质，每一张卡都独一无二</div>
-    </div>
-  </div>
-
-  <div class="pixel-card">
-    <h2>⚔️ 战斗实录</h2>
-    <div class="video-wrap">
-      <video id="battleVideo" src="battle-demo.mp4" autoplay muted loop playsinline controls></video>
-    </div>
-  </div>
-  <div class="pixel-card">
-    <h2>📸 游戏截图</h2>
-    <div class="screenshots">
-      <div class="shot">
-        <img src="screenshot-craft.jpg" alt="制卡界面">
-        <div class="caption">🎴 制卡界面</div>
-      </div>
-      <div class="shot">
-        <img src="screenshot-explore.jpg" alt="探索界面">
-        <div class="caption">🏹 探索界面</div>
+    <div class="features" id="featureCarousel">
+    <div class="feature-viewport">
+      <div class="feature-track" id="featureTrack">
+        <div class="feature active" data-idx="0"><div class="icon">🃏</div><div class="title">自由制卡</div><div class="desc">五大纹路维度自由组合，创造独一无二的专属卡牌</div></div>
+        <div class="feature" data-idx="1"><div class="icon">⚔️</div><div class="title">策略对战</div><div class="desc">能量管理 + 场地布局 + 元素克制，深度战术博弈</div></div>
+        <div class="feature" data-idx="2"><div class="icon">🏹</div><div class="title">野外探索</div><div class="desc">收集材料，解锁更多制卡配方与隐藏效果</div></div>
+        <div class="feature" data-idx="3"><div class="icon">💎</div><div class="title">品质系统</div><div class="desc">废品到完美五档品质，每一张卡都独一无二</div></div>
+        <div class="feature" data-idx="0" data-clone="1"><div class="icon">🃏</div><div class="title">自由制卡</div><div class="desc">五大纹路维度自由组合，创造独一无二的专属卡牌</div></div>
       </div>
     </div>
+    <div class="feature-dots" id="featureDots">
+      <div class="feature-dot active" data-target="0"></div>
+      <div class="feature-dot" data-target="1"></div>
+      <div class="feature-dot" data-target="2"></div>
+      <div class="feature-dot" data-target="3"></div>
+    </div>
   </div>
-
-  <div class="pixel-card">
-    <h2>📋 游戏特色</h2>
-    <ul>
-      <li>像素画风治愈系视觉体验</li>
-      <li>超 80 种纹路组件自由搭配</li>
-      <li>回合制互换伤害模型，连击、中毒、元素克制等丰富机制</li>
-      <li>本地存档，离线可玩</li>
-      <li>完整制卡小游戏，手感与策略兼具</li>
-    </ul>
-  </div>
-
-  <div class="announce">
-    <b>📌 公告</b><br>
-    2026-09-11：v1.2.269111 更新！辅材效果全链路完善、战斗系统优化。<br>
-    更多更新内容敬请关注本页。
-  </div>
-</div>
 
 <footer>
   <div>© 2026 pipos工作室 · 卡师模拟器官方站点</div>
@@ -368,27 +346,30 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
   var track = document.getElementById('featureTrack');
   var carousel = document.getElementById('featureCarousel');
   var dots = document.querySelectorAll('#featureDots .feature-dot');
+  var items = track.querySelectorAll('.feature');
   var N = 4;
   var idx = 0;
   var timer = null;
   var pausedUntil = 0;
+  var STEP = 64; // 62% + 2% gap 近似
 
   function apply(newIdx, animate) {
     if (animate === false) { track.style.transition = 'none'; }
-    track.style.transform = 'translateX(' + (-newIdx * 100) + '%)';
+    track.style.transform = 'translateX(' + (-newIdx * STEP) + '%)';
     if (animate === false) {
       void track.offsetWidth;
       track.style.transition = '';
     }
     var real = ((newIdx % N) + N) % N;
     dots.forEach(function(d, i) { d.classList.toggle('active', i === real); });
+    items.forEach(function(el, i) { el.classList.toggle('active', i === newIdx); });
   }
   function tick() {
     if (Date.now() < pausedUntil) return;
     idx = idx + 1;
     apply(idx, true);
     if (idx >= N) {
-      setTimeout(function() { idx = 0; apply(idx, false); }, 650);
+      setTimeout(function() { idx = 0; apply(idx, false); }, 750);
     }
   }
   function start() {
