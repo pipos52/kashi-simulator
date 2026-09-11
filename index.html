@@ -39,14 +39,17 @@ body {
   margin-bottom: 20px;
 }
 .logo-title {
-  font-size: clamp(42px, 10vw, 76px);
+  font-size: 11vw;
   font-weight: 900;
-  letter-spacing: clamp(4px, 0.8vw, 8px);
+  letter-spacing: 0.5vw;
   color: #2b2b2b;
   white-space: nowrap;
   text-shadow:
     0.08em 0.08em 0 #ffd44d,
     0.16em 0.16em 0 #ff6b57;
+}
+@media (max-width: 640px) {
+  .logo-title { font-size: 14vw; letter-spacing: 0.6vw; }
 }
 .logo-sub {
   margin-top: 16px;
@@ -382,8 +385,8 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
 
   function offsetOf(i) {
     // 非激活相对当前的偏移，用卡片本身宽度算（不用 gap）
-    // 每张卡 28% viewport 宽，卡片中心间距 = 62% * vpW
-    var step = viewport.clientWidth * 0.32;
+    // 每张卡 28%，步进 42%，卡片中心间距 = 62% * vpW
+    var step = viewport.clientWidth * 0.42;
     return (i - idx) * step;
   }
 
