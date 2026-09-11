@@ -39,13 +39,14 @@ body {
   margin-bottom: 20px;
 }
 .logo-title {
-  font-size: 52px;
+  font-size: clamp(28px, 8vw, 52px);
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: clamp(3px, 0.6vw, 6px);
   color: #2b2b2b;
+  white-space: nowrap;
   text-shadow:
-    4px 4px 0 #ffd44d,
-    8px 8px 0 #ff6b57;
+    00.08em 00.08em 0 #ffd44d,
+    00.16em 00.16em 0 #ff6b57;
 }
 .logo-sub {
   margin-top: 16px;
