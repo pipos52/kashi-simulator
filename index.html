@@ -161,8 +161,8 @@ body {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 28%;
-  max-width: 340px;
+  width: 62%;
+  max-width: 560px;
   padding: 32px 24px;
   background: #fff;
   border: 4px solid #2b2b2b;
@@ -172,8 +172,9 @@ body {
   transition: transform 0.7s cubic-bezier(0.4,0,0.2,1),
               opacity 0.5s ease;
   transform-origin: center center;
-  opacity: 0.5;
-  transform: translateX(calc(-50% + var(--offset, 0px))) scale(0.7);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(-50% + var(--offset, 0px))) scale(0.75);
 }
 .feature.active {
   opacity: 1;
@@ -218,8 +219,8 @@ body {
 }
 @media (max-width: 640px) {
   .feature {
-    width: 68%;
-    padding: 20px 12px;
+    width: 82%;
+    padding: 24px 16px;
   }
   .feature .icon { font-size: 32px; }
   .feature .title { font-size: 16px; padding: 2px 10px; }
@@ -386,7 +387,7 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
   function offsetOf(i) {
     // 非激活相对当前的偏移，用卡片本身宽度算（不用 gap）
     // 每张卡 28%，步进 42%，卡片中心间距 = 62% * vpW
-    var step = viewport.clientWidth * 0.42;
+    var step = viewport.clientWidth * 0.62;
     return (i - idx) * step;
   }
 
