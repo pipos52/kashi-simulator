@@ -198,44 +198,33 @@ body {
 .card-content.open {
   display: block;
 }
-/* ===== 卡牌详情表格 ===== */
-.card-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-.card-table th {
-  background: #ffd44d;
+/* ===== 卡牌列表（每卡三行） ===== */
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+.card-item {
   border: 2px solid #2b2b2b;
-  padding: 8px 10px;
-  text-align: left;
-  font-weight: 900;
-  white-space: nowrap;
+  background: #fffdf5;
+  padding: 10px 12px;
+  box-shadow: 3px 3px 0 #2b2b2b;
 }
-.card-table td {
+.ci-line1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ci-name { font-weight: 900; font-size: 15px; }
+.ci-star { font-size: 13px; letter-spacing: 2px; }
+.ci-cost {
+  margin-left: auto;
+  background: #ff6b57; color: #fff;
   border: 2px solid #2b2b2b;
-  padding: 8px 10px;
-  font-weight: 500;
+  padding: 2px 10px; font-weight: 900; font-size: 12px;
 }
-.card-table tr:nth-child(even) {
-  background: #f9f9f9;
-}
-.card-table .star-1 { color: #95a5a6; }
-.card-table .star-2 { color: #66c4ff; }
-.card-table .star-3 { color: #ff6b57; font-weight: 900; }
-.card-table .cost { color: #ff6b57; font-weight: 900; }
-.card-table .effect { font-size: 12px; color: #666; }
-/* ===== 底部 ===== */
-.footer {
-  text-align: center;
-  padding: 40px;
-  color: #666;
-  font-size: 14px;
-  font-weight: 700;
-}
+.ci-line2 { margin-top: 4px; font-size: 12px; color: #555; display: flex; gap: 14px; }
+.ci-num { color: #999; }
+.ci-ah { font-weight: 700; }
+.ci-line3 { margin-top: 6px; font-size: 13px; line-height: 1.6; color: #2b2b2b; }
+.star-1 { color: #95a5a6; }
+.star-2 { color: #66c4ff; }
+.star-3 { color: #ff6b57; font-weight: 900; }
 @media (max-width: 640px) {
-  .card-table { font-size: 11px; }
-  .card-table th, .card-table td { padding: 4px 6px; }
+  .ci-name { font-size: 14px; }
+  .ci-line3 { font-size: 12px; }
 }
 </style>
 </head>
@@ -287,49 +276,47 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开北境军卡牌（18张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>边军刀盾手</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 基础刀盾兵</td></tr>
-        <tr><td>2</td><td>边军长枪兵</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 基础长枪兵</td></tr>
-        <tr><td>3</td><td>边军弩手</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 远程弩手</td></tr>
-        <tr><td>4</td><td>边军辅兵</td><td>0/4</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 后勤辅助</td></tr>
-        <tr><td>5</td><td>边军骑兵</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 快速机动</td></tr>
-        <tr><td>6</td><td>边军医护兵</td><td>1/4</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 战场救护</td></tr>
-        <tr><td>7</td><td>边军重甲兵</td><td>4/3</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">白板 · 重装步兵</td></tr>
-        <tr><td>8</td><td>雪夜斥候</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场打1 · 雪夜突袭</td></tr>
-        <tr><td>9</td><td>铁蒺藜防线</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打2</td></tr>
-        <tr><td>10</td><td>沧水医师</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR10受伤回血1 · 沧水治愈</td></tr>
-        <tr><td>11</td><td>军旗手</td><td>3/3</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR12回合开始增益全体1攻 · 军旗不倒</td></tr>
-        <tr><td>12</td><td>督战队</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR09攻宣打2 · 督战冲锋</td></tr>
-        <tr><td>13</td><td>军法官</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场锁1回合 · 军法如山</td></tr>
-        <tr><td>14</td><td>断后死士</td><td>4/4</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR06送墓打2 · 断后阻敌</td></tr>
-        <tr><td>15</td><td>沧水防线</td><td>0/0</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">法术 · TR12回合开始增益全体1命</td></tr>
-        <tr><td>16</td><td>都尉</td><td>4/4</td><td class="cost">7</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1攻1命 · 都尉领军</td></tr>
-        <tr><td>17</td><td>死战督军</td><td>4/5</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR01入场增益全体2攻+CO04弃2 · 死战不退</td></tr>
-        <tr><td>18</td><td class="star-3">霍惊澜</td><td>5/6</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">TR01入场增益全体1攻+TR06送墓增益全体1命 · 北境军神</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军刀盾手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军长枪兵</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军弩手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军辅兵</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 0 · 命 4</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军骑兵</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军医护兵</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 4</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">边军重甲兵</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 4 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">雪夜斥候</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【雪夜突袭】入场时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">铁蒺藜防线</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">沧水医师</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【沧水治愈】我方回合结束时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">军旗手</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【军旗不倒】受到伤害后，我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">督战队</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【督战冲锋】攻击宣言时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">军法官</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【军法如山】入场时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">断后死士</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【断后阻敌】被送入墓地时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">沧水防线</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】受到伤害后，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">都尉</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【都尉领军】入场时，我方全体+1攻击+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">死战督军</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#17</span><span class="ci-ah">攻 4 · 命 5</span></div><div class="ci-line3">【死战不退】入场时，我方全体+2攻击（代价：弃2张牌）</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">霍惊澜</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#18</span><span class="ci-ah">攻 5 · 命 6</span></div><div class="ci-line3">【北境军神】入场时，我方全体+1攻击；被送入墓地时，我方全体+1生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开执律司卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>执律司书吏</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 文书工作</td></tr>
-        <tr><td>2</td><td>执律司捕快</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 缉拿犯人</td></tr>
-        <tr><td>3</td><td>执律司仵作</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 验尸查案</td></tr>
-        <tr><td>4</td><td>执律司番役</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 暗中查访</td></tr>
-        <tr><td>5</td><td>执律司狱卒</td><td>2/3</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">白板 · 看守大牢</td></tr>
-        <tr><td>6</td><td>执律司文书</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 文书调档</td></tr>
-        <tr><td>7</td><td>执律司捕头</td><td>3/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 缉拿要犯</td></tr>
-        <tr><td>8</td><td>执律司巡察</td><td>2/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR10受伤回血1 · 巡察四方</td></tr>
-        <tr><td>9</td><td>执律司提刑</td><td>3/4</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场打2 · 提审犯人</td></tr>
-        <tr><td>10</td><td>执律司少卿</td><td>4/4</td><td class="cost">7</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 少卿断案</td></tr>
-        <tr><td>11</td><td>执律司刑讯</td><td>0/0</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>12</td><td>执律司通缉令</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场锁1回合</td></tr>
-        <tr><td>13</td><td>执律司大牢</td><td>0/0</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">法术 · TR12回合开始锁1回合</td></tr>
-        <tr><td>14</td><td class="star-3">铁面</td><td>5/5</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR01入场锁全体1回合 · 铁面无私</td></tr>
-        <tr><td>15</td><td class="star-3">量力而行</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打4+抽1</td></tr>
-        <tr><td>16</td><td class="star-3">无赦令</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打3+锁1回合</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司书吏</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司捕快</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司仵作</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司番役</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司狱卒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司文书</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【文书调档】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司捕头</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【缉拿要犯】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司巡察</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 4</span></div><div class="ci-line3">【巡察四方】我方回合结束时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司提刑</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【提审犯人】入场时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司少卿</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【少卿断案】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司刑讯</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司通缉令</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">执律司大牢</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】受到伤害后，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">铁面</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 5 · 命 5</span></div><div class="ci-line3">【铁面无私】入场时，锁定敌方全体1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">量力而行</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成4点伤害；抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无赦令</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害；锁定1个目标1回合</div></div>
+      </div>
     </div>
   </div>
 
@@ -343,47 +330,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开浩然流卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>书院童子</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 扫地背书</td></tr>
-        <tr><td>2</td><td>书院仆役</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 端茶送水</td></tr>
-        <tr><td>3</td><td>书院生员</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 刚入学</td></tr>
-        <tr><td>4</td><td>书院讲师</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 授课讲师</td></tr>
-        <tr><td>5</td><td>书院藏书吏</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 看守藏书楼</td></tr>
-        <tr><td>6</td><td>书院护卫</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 巡逻武师</td></tr>
-        <tr><td>7</td><td>晨读生</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 一日之计</td></tr>
-        <tr><td>8</td><td>问难生</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR09攻宣打1 · 每问必得</td></tr>
-        <tr><td>9</td><td>书院厨娘</td><td>0/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 热汤暖心</td></tr>
-        <tr><td>10</td><td>抄书人</td><td>1/3</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 抄胜读十遍</td></tr>
-        <tr><td>11</td><td>书院琴师</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR12回合开始增益1攻 · 琴音养气</td></tr>
-        <tr><td>12</td><td>书院山长</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 庇护学子</td></tr>
-        <tr><td>13</td><td>藏书楼守</td><td>2/5</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR10受伤抽1 · 书在人在</td></tr>
-        <tr><td>14</td><td>浩然正气</td><td>0/0</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打2+增益全体1命</td></tr>
-        <tr><td>15</td><td class="star-3">许观澜</td><td>4/5</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR01入场增益全体2命 · 书院山长</td></tr>
-        <tr><td>16</td><td class="star-3">浩然长歌</td><td>0/0</td><td class="cost">5</td><td class="star-3">3</td><td class="effect">法术 · TR01入场增益全体2攻2命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院童子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院仆役</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院生员</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院讲师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院藏书吏</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院护卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">晨读生</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【一日之计】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">问难生</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【每问必得】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院厨娘</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【热汤暖心】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">抄书人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【抄胜读十遍】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院琴师</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【琴音养气】受到伤害后，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">书院山长</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【庇护学子】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">藏书楼守</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【书在人在】我方回合结束时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">浩然正气</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">许观澜</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 5</span></div><div class="ci-line3">【书院山长】入场时，我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">浩然长歌</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击+2生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开问溟录卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>溟渊弟子</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 初入溟渊</td></tr>
-        <tr><td>2</td><td>溟渊侍者</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 侍奉问溟师</td></tr>
-        <tr><td>3</td><td>溟渊书生</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 研读溟录</td></tr>
-        <tr><td>4</td><td>溟渊守卫</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 守护入口</td></tr>
-        <tr><td>5</td><td>溟渊行者</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 行走四方</td></tr>
-        <tr><td>6</td><td>溟渊引路人</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 指引问心</td></tr>
-        <tr><td>7</td><td>溟渊占卜师</td><td>2/2</td><td class="cost">4</td><td class="star-1">1</td><td class="effect">TR01入场打1+抽1 · 以溟为镜</td></tr>
-        <tr><td>8</td><td>溟渊药童</td><td>0/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 溟水疗伤</td></tr>
-        <tr><td>9</td><td>溟渊琴师</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR12回合开始增益1命 · 润物无声</td></tr>
-        <tr><td>10</td><td>溟渊剑客</td><td>3/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 剑问本心</td></tr>
-        <tr><td>11</td><td>溟渊长老</td><td>3/4</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1攻1命 · 窥见门径</td></tr>
-        <tr><td>12</td><td>溟渊大祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 溟水愈人</td></tr>
-        <tr><td>13</td><td>溟渊问心</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>14</td><td class="star-3">白鹿真人</td><td>3/5</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR01入场打2+增益全体2命 · 问溟创始人</td></tr>
-        <tr><td>15</td><td class="star-3">溟渊之主</td><td>4/4</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场打2+抽1 · 溟渊深处</td></tr>
-        <tr><td>16</td><td class="star-3">问溟大典</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场增益全体2攻+抽1</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊侍者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊书生</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊引路人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【指引问心】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊占卜师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【以溟为镜】入场时，造成1点伤害；抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊药童</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【溟水疗伤】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊琴师</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【润物无声】受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊剑客</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【剑问本心】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【窥见门径】入场时，我方全体+1攻击+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊大祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【溟水愈人】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊问心</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">白鹿真人</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【问溟创始人】入场时，造成2点伤害；我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">溟渊之主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【溟渊深处】入场时，造成2点伤害；抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">问溟大典</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击；抽1张牌</div></div>
+      </div>
     </div>
   </div>
 
@@ -397,47 +382,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开神钟卫道卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>钟童</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 扫钟小童</td></tr>
-        <tr><td>2</td><td>卫道弟子</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 入门弟子</td></tr>
-        <tr><td>3</td><td>钟阁守卫</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 守卫神钟阁</td></tr>
-        <tr><td>4</td><td>传功弟子</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 传授功法</td></tr>
-        <tr><td>5</td><td>钟阁执事</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 管理日常</td></tr>
-        <tr><td>6</td><td>卫道剑客</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 佩剑巡逻</td></tr>
-        <tr><td>7</td><td>晨钟弟子</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 晨钟暮鼓</td></tr>
-        <tr><td>8</td><td>暮鼓弟子</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始增益1攻 · 鼓声震邪</td></tr>
-        <tr><td>9</td><td>神钟守卫</td><td>0/4</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR10受伤回血1 · 钟在人在</td></tr>
-        <tr><td>10</td><td>卫道先锋</td><td>3/2</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 冲锋在前</td></tr>
-        <tr><td>11</td><td>神钟共鸣</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场增益全体1命</td></tr>
-        <tr><td>12</td><td>神钟长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 镇守多年</td></tr>
-        <tr><td>13</td><td>卫道统领</td><td>4/3</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR09攻宣打2 · 统领弟子</td></tr>
-        <tr><td>14</td><td>神钟九响</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>15</td><td class="star-3">太一掌门</td><td>4/5</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR01入场增益全体2命 · 神钟之主</td></tr>
-        <tr><td>16</td><td class="star-3">神钟天降</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打2+增益全体2命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">钟童</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">卫道弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">钟阁守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">传功弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">钟阁执事</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">卫道剑客</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">晨钟弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【晨钟暮鼓】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">暮鼓弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【鼓声震邪】受到伤害后，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">神钟守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 4</span></div><div class="ci-line3">【钟在人在】我方回合结束时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">卫道先锋</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【冲锋在前】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">神钟共鸣</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">神钟长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【镇守多年】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">卫道统领</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 4 · 命 3</span></div><div class="ci-line3">【统领弟子】攻击宣言时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">神钟九响</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">太一掌门</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 5</span></div><div class="ci-line3">【神钟之主】入场时，我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">神钟天降</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；我方全体+2生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开封山秘录卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>封山弟子</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 守山弟子</td></tr>
-        <tr><td>2</td><td>封山杂役</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 打理禁地</td></tr>
-        <tr><td>3</td><td>封山剑客</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 练剑弟子</td></tr>
-        <tr><td>4</td><td>封山药师</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 采集灵药</td></tr>
-        <tr><td>5</td><td>封山行者</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 巡山行者</td></tr>
-        <tr><td>6</td><td>封山引路人</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 带你入山</td></tr>
-        <tr><td>7</td><td>封山守林人</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 山林守护</td></tr>
-        <tr><td>8</td><td>封山猎人</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 山中猎手</td></tr>
-        <tr><td>9</td><td>封山隐士</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益1命 · 山中隐士</td></tr>
-        <tr><td>10</td><td>封山禁制</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场锁1回合</td></tr>
-        <tr><td>11</td><td>封山长老</td><td>3/4</td><td class="cost">7</td><td class="star-2">2</td><td class="effect">TR01入场锁单体1回合 · 封山锁人</td></tr>
-        <tr><td>12</td><td>封山秘术师</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 秘术护体</td></tr>
-        <tr><td>13</td><td>封山剑阵</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打2+锁1回合</td></tr>
-        <tr><td>14</td><td>封山传承</td><td>0/0</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">法术 · TR01入场抽2</td></tr>
-        <tr><td>15</td><td class="star-3">封山掌门</td><td>3/5</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">TR01入场破坏+TR06送墓增益全体1命 · 封山之主</td></tr>
-        <tr><td>16</td><td class="star-3">封山绝学</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打3+锁1回合</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山弟子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山杂役</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山剑客</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山药师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山引路人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【带你入山】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山守林人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【山林守护】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山猎人</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【山中猎手】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山隐士</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【山中隐士】入场时，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山禁制</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【封山锁人】入场时，锁定1个目标1回合1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山秘术师</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【秘术护体】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山剑阵</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山传承</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，抽2张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山掌门</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【封山之主】入场时，破坏1个目标；被送入墓地时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">封山绝学</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害；锁定1个目标1回合</div></div>
+      </div>
     </div>
   </div>
 
@@ -451,47 +434,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开极夜北庭卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>雪原小妖</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 北庭底层</td></tr>
-        <tr><td>2</td><td>冰原狼妖</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 雪原狼化</td></tr>
-        <tr><td>3</td><td>北庭侍卫</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 守卫庭帐</td></tr>
-        <tr><td>4</td><td>冰窟苦力</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 挖掘冰窟</td></tr>
-        <tr><td>5</td><td>北庭猎手</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 雪原狩猎</td></tr>
-        <tr><td>6</td><td>冰甲卫士</td><td>1/4</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 冰甲护身</td></tr>
-        <tr><td>7</td><td>雪原斥候</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场打1 · 斥候突袭</td></tr>
-        <tr><td>8</td><td>冰锥妖</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR09攻宣打1 · 冰锥刺骨</td></tr>
-        <tr><td>9</td><td>雪原萨满</td><td>0/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 萨满疗伤</td></tr>
-        <tr><td>10</td><td>北庭妖姬</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益1攻 · 妖姬魅惑</td></tr>
-        <tr><td>11</td><td>冰原风暴</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打2</td></tr>
-        <tr><td>12</td><td>北庭将军</td><td>4/3</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR09攻宣打2 · 北庭猛将</td></tr>
-        <tr><td>13</td><td>雪原大萨满</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR12回合开始回血2 · 大萨满祈福</td></tr>
-        <tr><td>14</td><td>极夜降临</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打2+增益全体1攻</td></tr>
-        <tr><td>15</td><td class="star-3">极夜妖皇</td><td>5/5</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR01入场打3+增益全体1攻 · 北庭之主</td></tr>
-        <tr><td>16</td><td class="star-3">永夜降临</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打4</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">雪原小妖</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">冰原狼妖</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">北庭侍卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">冰窟苦力</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">北庭猎手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">冰甲卫士</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 4</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">雪原斥候</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【斥候突袭】入场时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">冰锥妖</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【冰锥刺骨】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">雪原萨满</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【萨满疗伤】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">北庭妖姬</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【妖姬魅惑】入场时，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">冰原风暴</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">北庭将军</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 4 · 命 3</span></div><div class="ci-line3">【北庭猛将】攻击宣言时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">雪原大萨满</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【大萨满祈福】受到伤害后，回复2点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">极夜降临</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">极夜妖皇</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 5 · 命 5</span></div><div class="ci-line3">【北庭之主】入场时，造成3点伤害；我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">永夜降临</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成4点伤害</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开月见旧誓卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>月见小狐</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 狐族幼崽</td></tr>
-        <tr><td>2</td><td>月见侍女</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 侍奉狐族</td></tr>
-        <tr><td>3</td><td>月见猎手</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 月下狩猎</td></tr>
-        <tr><td>4</td><td>月见守卫</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 守卫月见台</td></tr>
-        <tr><td>5</td><td>月见行者</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 行走四方</td></tr>
-        <tr><td>6</td><td>月见琴师</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始增益1命 · 琴音惑心</td></tr>
-        <tr><td>7</td><td>月见舞姬</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始增益1攻 · 月下起舞</td></tr>
-        <tr><td>8</td><td>月见药师</td><td>0/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 狐族灵药</td></tr>
-        <tr><td>9</td><td>月见刺客</td><td>3/2</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 月下刺杀</td></tr>
-        <tr><td>10</td><td>月见幻术</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场锁1回合</td></tr>
-        <tr><td>11</td><td>月见长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 狐族长老</td></tr>
-        <tr><td>12</td><td>月见大祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 大祭司祈福</td></tr>
-        <tr><td>13</td><td>月见誓约</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场增益全体2攻</td></tr>
-        <tr><td>14</td><td class="star-3">月见狐妃</td><td>3/4</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场夺权1回合 · 狐妃夺权</td></tr>
-        <tr><td>15</td><td class="star-3">月见狐王</td><td>4/4</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR01入场打2+增益全体1攻 · 狐族之王</td></tr>
-        <tr><td>16</td><td class="star-3">月见大典</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场增益全体2攻2命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见小狐</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见侍女</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见猎手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见琴师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【琴音惑心】受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见舞姬</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【月下起舞】受到伤害后，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见药师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【狐族灵药】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见刺客</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【月下刺杀】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见幻术</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【狐族长老】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见大祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【大祭司祈福】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见誓约</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见狐妃</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【狐妃夺权】入场时，夺取1个敌军的控制权回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见狐王</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【狐族之王】入场时，造成2点伤害；我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">月见大典</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击+2生命</div></div>
+      </div>
     </div>
   </div>
 
@@ -505,47 +486,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开香火金身卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>小沙弥</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 扫地小和尚</td></tr>
-        <tr><td>2</td><td>香火僧</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 管理香火</td></tr>
-        <tr><td>3</td><td>武僧</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 练武僧人</td></tr>
-        <tr><td>4</td><td>知客僧</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 接待香客</td></tr>
-        <tr><td>5</td><td>藏经僧</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 看守藏经阁</td></tr>
-        <tr><td>6</td><td>护法武僧</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 护法金刚</td></tr>
-        <tr><td>7</td><td>晨钟僧</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 晨钟暮鼓</td></tr>
-        <tr><td>8</td><td>诵经僧</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始增益1命 · 诵经祈福</td></tr>
-        <tr><td>9</td><td>香火旺盛</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场回血2</td></tr>
-        <tr><td>10</td><td>金身护法</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR10受伤回血1 · 金身护体</td></tr>
-        <tr><td>11</td><td>寺院长老</td><td>3/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 长老祈福</td></tr>
-        <tr><td>12</td><td>金身罗汉</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR10受伤回血2 · 罗汉金身</td></tr>
-        <tr><td>13</td><td>香火鼎盛</td><td>0/0</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">法术 · TR01入场增益全体1攻1命</td></tr>
-        <tr><td>14</td><td>寺院主持</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 主持方丈</td></tr>
-        <tr><td>15</td><td class="star-3">金身佛陀</td><td>4/5</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">TR10受伤回血2+TR12回合开始增益1命 · 佛陀转世</td></tr>
-        <tr><td>16</td><td class="star-3">佛光普照</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场增益全体2攻2命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">小沙弥</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">香火僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">武僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">知客僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">藏经僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">护法武僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">晨钟僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【晨钟暮鼓】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">诵经僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【诵经祈福】受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">香火旺盛</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，回复2点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">金身护法</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【金身护体】我方回合结束时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">寺院长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【长老祈福】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">金身罗汉</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【罗汉金身】我方回合结束时，回复2点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">香火鼎盛</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+1攻击+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">寺院主持</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【主持方丈】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">金身佛陀</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 5</span></div><div class="ci-line3">【佛陀转世】我方回合结束时，回复2点生命；受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">佛光普照</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击+2生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开苦海往生卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>苦行僧</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 苦修僧人</td></tr>
-        <tr><td>2</td><td>往生者</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 等待往生</td></tr>
-        <tr><td>3</td><td>苦海行者</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 行走苦海</td></tr>
-        <tr><td>4</td><td>摆渡人</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 渡人过苦海</td></tr>
-        <tr><td>5</td><td>守墓僧</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 看守往生塔</td></tr>
-        <tr><td>6</td><td>超度僧</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR06送墓回血1 · 超度亡魂</td></tr>
-        <tr><td>7</td><td>苦海引路人</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 引路往生</td></tr>
-        <tr><td>8</td><td>往生咒</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打1</td></tr>
-        <tr><td>9</td><td>苦海摆渡</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR06送墓打1 · 摆渡亡魂</td></tr>
-        <tr><td>10</td><td>轮回僧</td><td>3/3</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR06送墓增益1攻 · 轮回转世</td></tr>
-        <tr><td>11</td><td>苦海长老</td><td>3/4</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR06送墓打2 · 长老超度</td></tr>
-        <tr><td>12</td><td>往生大典</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场增益全体1攻1命</td></tr>
-        <tr><td>13</td><td>轮回之门</td><td>0/0</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">法术 · TR01入场复活1</td></tr>
-        <tr><td>14</td><td class="star-3">苦海菩萨</td><td>3/5</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR06送墓回血3 · 菩萨慈悲</td></tr>
-        <tr><td>15</td><td class="star-3">往生之主</td><td>4/4</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR06送墓打2+增益全体1命 · 往生之主</td></tr>
-        <tr><td>16</td><td class="star-3">轮回转世</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR01入场复活2</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦行僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">往生者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦海行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">摆渡人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">守墓僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">超度僧</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【超度亡魂】被送入墓地时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦海引路人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【引路往生】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">往生咒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦海摆渡</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【摆渡亡魂】被送入墓地时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">轮回僧</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【轮回转世】被送入墓地时，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦海长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【长老超度】被送入墓地时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">往生大典</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+1攻击+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">轮回之门</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，复活1个友军</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苦海菩萨</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【菩萨慈悲】被送入墓地时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">往生之主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【往生之主】被送入墓地时，造成2点伤害；我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">轮回转世</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，复活1个友军</div></div>
+      </div>
     </div>
   </div>
 
@@ -559,47 +538,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开缘契潮声卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>渔家少年</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 海边少年</td></tr>
-        <tr><td>2</td><td>渔家少女</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 织网少女</td></tr>
-        <tr><td>3</td><td>船夫</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 摆渡船夫</td></tr>
-        <tr><td>4</td><td>渔民</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 出海打渔</td></tr>
-        <tr><td>5</td><td>船匠</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 造船修船</td></tr>
-        <tr><td>6</td><td>海神信徒</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 信奉海神</td></tr>
-        <tr><td>7</td><td>潮声听客</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 听潮知天命</td></tr>
-        <tr><td>8</td><td>缘契祭司</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 祭司祈福</td></tr>
-        <tr><td>9</td><td>海浪冲击</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打2</td></tr>
-        <tr><td>10</td><td>缘契守护者</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR10受伤回血1 · 守护缘契</td></tr>
-        <tr><td>11</td><td>海神祝福</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益1命 · 海神赐福</td></tr>
-        <tr><td>12</td><td>缘契长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 长老主持</td></tr>
-        <tr><td>13</td><td>海神祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 大祭司祈福</td></tr>
-        <tr><td>14</td><td>缘契大典</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场增益全体1攻1命</td></tr>
-        <tr><td>15</td><td class="star-3">缘契海神</td><td>3/5</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场回血2+增益全体1命 · 海神显灵</td></tr>
-        <tr><td>16</td><td class="star-3">潮声漫天</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打3+增益全体1命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">渔家少年</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">渔家少女</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">船夫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">渔民</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">船匠</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">海神信徒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">潮声听客</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【听潮知天命】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">缘契祭司</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【祭司祈福】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">海浪冲击</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">缘契守护者</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【守护缘契】我方回合结束时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">海神祝福</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【海神赐福】入场时，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">缘契长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【长老主持】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">海神祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【大祭司祈福】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">缘契大典</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+1攻击+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">缘契海神</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【海神显灵】入场时，回复2点生命；我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">潮声漫天</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害；我方全体+1生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开归墟鲸歌卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>深海小妖</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 深海小妖</td></tr>
-        <tr><td>2</td><td>归墟引路者</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 引路归墟</td></tr>
-        <tr><td>3</td><td>鲸落拾荒者</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 拾取鲸落</td></tr>
-        <tr><td>4</td><td>深海猎手</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 深海狩猎</td></tr>
-        <tr><td>5</td><td>归墟守卫</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 守卫归墟</td></tr>
-        <tr><td>6</td><td>鲸歌听者</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 听鲸歌知天机</td></tr>
-        <tr><td>7</td><td>深海潜行者</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR09攻宣打1 · 深海潜行</td></tr>
-        <tr><td>8</td><td>鲸落滋养</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR06送墓回血2</td></tr>
-        <tr><td>9</td><td>归墟探索者</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场打1 · 探索归墟</td></tr>
-        <tr><td>10</td><td>鲸歌共鸣</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR12回合开始增益1命 · 鲸歌共鸣</td></tr>
-        <tr><td>11</td><td>归墟长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 长老守护</td></tr>
-        <tr><td>12</td><td>鲸落祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR06送墓增益全体1攻 · 祭司献祭</td></tr>
-        <tr><td>13</td><td>归墟深渊</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>14</td><td class="star-3">归墟鲸主</td><td>3/4</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">TR01入场抽2+打1 · 鲸主苏醒</td></tr>
-        <tr><td>15</td><td class="star-3">深海之主</td><td>4/4</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场打2+增益全体1命 · 深海霸主</td></tr>
-        <tr><td>16</td><td class="star-3">鲸落万物生</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR06送墓复活1+增益全体1攻</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">深海小妖</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟引路者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸落拾荒者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">深海猎手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸歌听者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【听鲸歌知天机】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">深海潜行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【深海潜行】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸落滋养</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，回复2点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟探索者</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【探索归墟】入场时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸歌共鸣</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【鲸歌共鸣】受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【长老守护】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸落祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【祭司献祭】被送入墓地时，我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟深渊</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归墟鲸主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【鲸主苏醒】入场时，抽2张牌；造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">深海之主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【深海霸主】入场时，造成2点伤害；我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">鲸落万物生</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，复活1个友军；我方全体+1攻击</div></div>
+      </div>
     </div>
   </div>
 
@@ -613,47 +590,45 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开祖神百寨卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>山寨孩童</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 百寨孩童</td></tr>
-        <tr><td>2</td><td>巫岭猎手</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 山中猎手</td></tr>
-        <tr><td>3</td><td>采药人</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 采集巫药</td></tr>
-        <tr><td>4</td><td>山寨守卫</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 守卫山寨</td></tr>
-        <tr><td>5</td><td>巫蛊学徒</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 学习巫蛊</td></tr>
-        <tr><td>6</td><td>百寨战士</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 百寨勇士</td></tr>
-        <tr><td>7</td><td>巫蛊师</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场打1 · 巫蛊伤人</td></tr>
-        <tr><td>8</td><td>祖神祭司</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 祭司祈福</td></tr>
-        <tr><td>9</td><td>巫毒蛊虫</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打1+锁1回合</td></tr>
-        <tr><td>10</td><td>百寨巫医</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR12回合开始回血1 · 巫医治病</td></tr>
-        <tr><td>11</td><td>祖神赐福</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益1命 · 祖神庇佑</td></tr>
-        <tr><td>12</td><td>百寨长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 长老议事</td></tr>
-        <tr><td>13</td><td>祖神大祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 大祭司祈福</td></tr>
-        <tr><td>14</td><td>巫蛊大阵</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打2+锁1回合</td></tr>
-        <tr><td>15</td><td class="star-3">祖神降临</td><td>4/5</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR01入场增益全体2命 · 祖神显灵</td></tr>
-        <tr><td>16</td><td class="star-3">百寨盛典</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR01入场增益全体2攻2命</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">山寨孩童</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">巫岭猎手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">采药人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">山寨守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">巫蛊学徒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">百寨战士</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">巫蛊师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【巫蛊伤人】入场时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">祖神祭司</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【祭司祈福】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">巫毒蛊虫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成1点伤害；锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">百寨巫医</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【巫医治病】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">祖神赐福</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【祖神庇佑】入场时，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">百寨长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【长老议事】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">祖神大祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【大祭司祈福】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">巫蛊大阵</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">祖神降临</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 4 · 命 5</span></div><div class="ci-line3">【祖神显灵】入场时，我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">百寨盛典</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，我方全体+2攻击+2生命</div></div>
+      </div>
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开无字碑卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>碑林守护者</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 守护碑林</td></tr>
-        <tr><td>2</td><td>无字碑信徒</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 信奉碑灵</td></tr>
-        <tr><td>3</td><td>碑林行者</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 行走碑林</td></tr>
-        <tr><td>4</td><td>守碑人</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 世代守碑</td></tr>
-        <tr><td>5</td><td>碑林猎手</td><td>3/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 碑林狩猎</td></tr>
-        <tr><td>6</td><td>碑灵低语</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 碑灵指引</td></tr>
-        <tr><td>7</td><td>碑林祭司</td><td>2/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR12回合开始回血1 · 祭司祈福</td></tr>
-        <tr><td>8</td><td>无字碑影</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打2</td></tr>
-        <tr><td>9</td><td>碑灵附体</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR01入场增益1攻 · 碑灵附体</td></tr>
-        <tr><td>10</td><td>碑林共鸣</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR12回合开始增益1命 · 碑林共鸣</td></tr>
-        <tr><td>11</td><td>碑林长老</td><td>3/4</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场增益全体1命 · 长老守护</td></tr>
-        <tr><td>12</td><td>无字碑祭司</td><td>2/5</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR01入场回血3 · 大祭司祈福</td></tr>
-        <tr><td>13</td><td>碑灵觉醒</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场打2+增益全体1攻</td></tr>
-        <tr><td>14</td><td class="star-3">无字碑主</td><td>4/4</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR01入场打2+增益全体1命 · 碑灵之主</td></tr>
-        <tr><td>15</td><td class="star-3">碑林之主</td><td>3/5</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场增益全体2命 · 碑林守护者</td></tr>
-        <tr><td>16</td><td class="star-3">无字碑·终</td><td>0/0</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打4+增益全体2攻</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林守护者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无字碑信徒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林行者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">守碑人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林猎手</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑灵低语</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【碑灵指引】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林祭司</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【祭司祈福】受到伤害后，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无字碑影</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑灵附体</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【碑灵附体】入场时，自身+1/+1攻</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林共鸣</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【碑林共鸣】受到伤害后，自身+1/+1命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林长老</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【长老守护】入场时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无字碑祭司</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 5</span></div><div class="ci-line3">【大祭司祈福】入场时，回复3点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑灵觉醒</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成2点伤害；我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无字碑主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【碑灵之主】入场时，造成2点伤害；我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">碑林之主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【碑林守护者】入场时，我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无字碑·终</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成4点伤害；我方全体+2攻击</div></div>
+      </div>
     </div>
   </div>
 
@@ -667,25 +642,24 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开九剑图卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>剑童</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 磨剑小童</td></tr>
-        <tr><td>2</td><td>剑侍</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 侍奉剑主</td></tr>
-        <tr><td>3</td><td>剑奴</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 为奴练剑</td></tr>
-        <tr><td>4</td><td>铸剑师</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 铸剑为业</td></tr>
-        <tr><td>5</td><td>藏剑童子</td><td>0/3</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 看守剑庐</td></tr>
-        <tr><td>6</td><td>剑庐守卫</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 守卫剑庐</td></tr>
-        <tr><td>7</td><td>听雨剑</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>8</td><td>问道剑</td><td>0/0</td><td class="cost">4</td><td class="star-1">1</td><td class="effect">法术 · TR01入场抽2</td></tr>
-        <tr><td>9</td><td>归鞘剑</td><td>0/0</td><td class="cost">4</td><td class="star-1">1</td><td class="effect">法术 · TR01入场回血1</td></tr>
-        <tr><td>10</td><td>剑图残页</td><td>0/0</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">法术 · TR01入场抽1</td></tr>
-        <tr><td>11</td><td>剑庐禁制</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR12回合开始锁1回合</td></tr>
-        <tr><td>12</td><td>苏妙音</td><td>2/3</td><td class="cost">7</td><td class="star-2">2</td><td class="effect">TR16回合结束锁1回合 · 剑图守护者</td></tr>
-        <tr><td>13</td><td>听雨剑主</td><td>4/3</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR09攻宣打2 · 听雨剑主</td></tr>
-        <tr><td>14</td><td>问道剑主</td><td>3/4</td><td class="cost">7</td><td class="star-2">2</td><td class="effect">TR01入场抽2 · 问道剑主</td></tr>
-        <tr><td>15</td><td class="star-3">归鞘剑主</td><td>3/4</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">TR06送墓打3 · 归鞘剑主</td></tr>
-        <tr><td>16</td><td class="star-3">九剑图</td><td>0/0</td><td class="cost">7</td><td class="star-3">3</td><td class="effect">法术 · TR01入场打1+抽2</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑童</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑侍</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑奴</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">铸剑师</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">藏剑童子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑庐守卫</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">听雨剑</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">问道剑</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，抽2张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归鞘剑</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，回复1点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑图残页</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">剑庐禁制</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】受到伤害后，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">苏妙音</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【剑图守护者】回合结束锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">听雨剑主</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 4 · 命 3</span></div><div class="ci-line3">【听雨剑主】攻击宣言时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">问道剑主</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【问道剑主】入场时，抽2张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">归鞘剑主</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【归鞘剑主】被送入墓地时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">九剑图</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 7</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成1点伤害；抽2张牌</div></div>
+      </div>
     </div>
   </div>
 
@@ -699,25 +673,24 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开无名者卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>流浪者</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 无名流浪</td></tr>
-        <tr><td>2</td><td>拾荒者</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 拾荒为生</td></tr>
-        <tr><td>3</td><td>失忆人</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 失忆之人</td></tr>
-        <tr><td>4</td><td>无家可归者</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 无家可归</td></tr>
-        <tr><td>5</td><td>无名旅人</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 无名旅人</td></tr>
-        <tr><td>6</td><td>影子</td><td>1/1</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR01入场抽1 · 影子随形</td></tr>
-        <tr><td>7</td><td>面具人</td><td>2/2</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">TR01入场锁1回合 · 面具之下</td></tr>
-        <tr><td>8</td><td>无名者的剑</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR01入场打3</td></tr>
-        <tr><td>9</td><td>无名者的眼</td><td>0/0</td><td class="cost">4</td><td class="star-1">1</td><td class="effect">法术 · TR01入场抽2</td></tr>
-        <tr><td>10</td><td>无面剑客</td><td>3/2</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR09攻宣打1 · 无面剑客</td></tr>
-        <tr><td>11</td><td>无影人</td><td>2/3</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR10受伤锁1回合 · 无影无形</td></tr>
-        <tr><td>12</td><td>夺舍</td><td>0/0</td><td class="cost">5</td><td class="star-2">2</td><td class="effect">法术 · TR01入场夺权1回合</td></tr>
-        <tr><td>13</td><td class="star-3">无名者·觉醒</td><td>3/3</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR01入场夺权1回合 · 觉醒时刻</td></tr>
-        <tr><td>14</td><td class="star-3">无名者·终局</td><td>4/4</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR01入场夺权1回合 · 终局之战</td></tr>
-        <tr><td>15</td><td class="star-3">无名者的故事</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR06送墓抽3</td></tr>
-        <tr><td>16</td><td class="star-3">无名者·归来</td><td>3/4</td><td class="cost">10</td><td class="star-3">3</td><td class="effect">TR01入场复活1 · 无名者归来</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">流浪者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">拾荒者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">失忆人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无家可归者</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名旅人</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">影子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【影子随形】入场时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">面具人</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【面具之下】入场时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者的剑</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，造成3点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者的眼</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，抽2张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无面剑客</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【无面剑客】攻击宣言时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无影人</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【无影无形】我方回合结束时，锁定1个目标1回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">夺舍</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】入场时，夺取1个敌军的控制权回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者·觉醒</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【觉醒时刻】入场时，夺取1个敌军的控制权回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者·终局</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【终局之战】入场时，夺取1个敌军的控制权回合</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者的故事</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，抽3张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">无名者·归来</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 3 · 命 4</span></div><div class="ci-line3">【无名者归来】入场时，复活1个友军</div></div>
+      </div>
     </div>
   </div>
 
@@ -731,25 +704,24 @@ body {
     </div>
     <button class="card-toggle" onclick="toggleCards(this)">🃏 展开古战场卡牌（16张）</button>
     <div class="card-content">
-      <table class="card-table">
-        <tr><th>#</th><th>卡名</th><th>攻/命</th><th>cost</th><th>★</th><th>效果/说明</th></tr>
-        <tr><td>1</td><td>断剑</td><td>1/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 断剑残刃</td></tr>
-        <tr><td>2</td><td>残盾</td><td>0/3</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 残破盾牌</td></tr>
-        <tr><td>3</td><td>锈甲</td><td>1/2</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 锈蚀铠甲</td></tr>
-        <tr><td>4</td><td>白骨</td><td>1/3</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 白骨累累</td></tr>
-        <tr><td>5</td><td>战旗</td><td>2/1</td><td class="cost">1</td><td class="star-1">1</td><td class="effect">白板 · 残破战旗</td></tr>
-        <tr><td>6</td><td>断矛</td><td>2/2</td><td class="cost">2</td><td class="star-1">1</td><td class="effect">白板 · 断裂长矛</td></tr>
-        <tr><td>7</td><td>古战场幽魂</td><td>1/2</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">TR06送墓打1 · 幽魂不散</td></tr>
-        <tr><td>8</td><td>古战场遗迹</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR06送墓抽1</td></tr>
-        <tr><td>9</td><td>英魂不散</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR06送墓增益全体1命</td></tr>
-        <tr><td>10</td><td>古战场号角</td><td>0/0</td><td class="cost">3</td><td class="star-1">1</td><td class="effect">法术 · TR06送墓增益全体1攻</td></tr>
-        <tr><td>11</td><td>古战场守灵人</td><td>2/3</td><td class="cost">4</td><td class="star-2">2</td><td class="effect">TR06送墓回血2 · 守灵人</td></tr>
-        <tr><td>12</td><td>古战场战魂</td><td>3/3</td><td class="cost">6</td><td class="star-2">2</td><td class="effect">TR06送墓打2 · 战魂觉醒</td></tr>
-        <tr><td>13</td><td class="star-3">古战场将魂</td><td>4/4</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">TR06送墓打2 · 将魂不灭</td></tr>
-        <tr><td>14</td><td class="star-3">古战场英灵</td><td>3/5</td><td class="cost">8</td><td class="star-3">3</td><td class="effect">TR06送墓增益全体2命 · 英灵庇护</td></tr>
-        <tr><td>15</td><td class="star-3">古战场终焉</td><td>0/0</td><td class="cost">9</td><td class="star-3">3</td><td class="effect">法术 · TR06送墓打3+增益全体2命</td></tr>
-        <tr><td>16</td><td class="star-3">古战场·醒</td><td>0/0</td><td class="cost">6</td><td class="star-3">3</td><td class="effect">法术 · TR12回合开始打2</td></tr>
-      </table>
+      <div class="card-list">
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">断剑</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 1 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">残盾</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">锈甲</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">白骨</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">战旗</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">断矛</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场幽魂</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【幽魂不散】被送入墓地时，造成1点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场遗迹</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，抽1张牌</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">英魂不散</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，我方全体+1生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场号角</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，我方全体+1攻击</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场守灵人</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 2 · 命 3</span></div><div class="ci-line3">【守灵人】被送入墓地时，回复2点生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场战魂</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 3 · 命 3</span></div><div class="ci-line3">【战魂觉醒】被送入墓地时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场将魂</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【将魂不灭】被送入墓地时，造成2点伤害</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场英灵</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 8</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 3 · 命 5</span></div><div class="ci-line3">【英灵庇护】被送入墓地时，我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场终焉</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 9</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】被送入墓地时，造成3点伤害；我方全体+2生命</div></div>
+        <div class="card-item"><div class="ci-line1"><span class="ci-name ">古战场·醒</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 6</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【法术】受到伤害后，造成2点伤害</div></div>
+      </div>
     </div>
   </div>
 
