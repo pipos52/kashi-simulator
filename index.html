@@ -400,7 +400,8 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
     <div class="taptap-btn-wrap">
       <a class="pixel-btn taptap-btn" href="https://tap.cn/zxP9x2Vm" target="_blank">TapTap 下载</a>
     </div>
-    <div class="worldview-head" style="margin-top:32px;font-size:15px;font-weight:700;color:#2b2b2b;display:inline-block;padding:4px 14px;background:#ffd44d;border:3px solid #2b2b2b;box-shadow:3px 3px 0 #2b2b2b;">卡包设定</div>
+    <div class="card-series-head" id="cardSeriesHead" style="margin-top:32px;cursor:pointer;user-select:none;font-size:15px;font-weight:700;color:#2b2b2b;display:inline-block;padding:4px 14px;background:#ffd44d;border:3px solid #2b2b2b;box-shadow:3px 3px 0 #2b2b2b;">卡包系列 <span id="cardSeriesArrow">▼</span></div>
+    <div id="cardSeries" style="display:none;">
     <div class="worldview-btn-wrap">
       <a class="pixel-btn worldview-btn" href="worldview.html">🌍 《沧澜古界》</a>
     </div>
@@ -409,6 +410,7 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
     </div>
     <div class="worldview-btn-wrap">
       <a class="pixel-btn worldview-btn" href="worldview_nbd.html" style="background:#6b4423;color:#f3ead9;">💍 《你不对劲》</a>
+    </div>
     </div>
   </div>
 
@@ -599,5 +601,18 @@ footer a { color: #2b2b2b; text-decoration: none; border-bottom: 3px solid #ffd4
 </script>
 
 </div>
+<script>
+(function(){
+  var head = document.getElementById('cardSeriesHead');
+  var box = document.getElementById('cardSeries');
+  var arrow = document.getElementById('cardSeriesArrow');
+  if (!head || !box) return;
+  head.addEventListener('click', function(){
+    var hidden = box.style.display === 'none';
+    box.style.display = hidden ? 'block' : 'none';
+    arrow.textContent = hidden ? '▲' : '▼';
+  });
+})();
+</script>
 </body>
 </html>
