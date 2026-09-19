@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卡师模拟器 · 围棋术语</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; image-rendering: pixelated; }
+body {
+  font-family: "Zpix", "Pixel", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: repeating-linear-gradient(0deg, #f5f0e8 0px, #f5f0e8 32px, #e6dcc8 32px, #e6dcc8 64px);
+  color: #2b2b2b; min-height: 100vh;
+}
+.pixel-top { height: 16px; background: repeating-linear-gradient(90deg, #2b2b2b 0 48px, #f5f0e8 48px 96px, #8b8b8b 96px 144px, #111 144px 192px, #5a5a5a 192px 240px); border-bottom: 4px solid #2b2b2b; }
+.container { max-width: 920px; margin: 0 auto; padding: 40px 20px 60px; }
+.logo-area { text-align: center; margin-bottom: 30px; }
+.logo-badge { display: inline-block; padding: 18px 40px; background: #fff; border: 4px solid #2b2b2b; box-shadow: 8px 8px 0 #2b2b2b; margin-bottom: 20px; }
+.logo-title { font-size: 9vw; font-weight: 900; letter-spacing: 0.5vw; color: #2b2b2b; white-space: nowrap; text-shadow: 0.08em 0.08em 0 #d9d9d9, 0.16em 0.16em 0 #8b8b8b; }
+@media (max-width: 640px) { .logo-title { font-size: 13vw; letter-spacing: 0.6vw; } }
+.logo-sub { margin-top: 16px; font-size: 18px; color: #fff; letter-spacing: 6px; font-weight: 700; background: #2b2b2b; display: inline-block; padding: 6px 24px; border: 3px solid #2b2b2b; box-shadow: 4px 4px 0 #8b8b8b; }
+.download-section { text-align: center; margin: 30px 0; }
+.pixel-btn { position: relative; display: inline-block; padding: 14px 34px; font-size: 18px; font-weight: 900; letter-spacing: 2px; text-decoration: none; color: #2b2b2b; border: 4px solid #2b2b2b; transition: none; cursor: pointer; }
+.pixel-btn:active { transform: translate(4px, 4px); box-shadow: none !important; }
+.back-btn { background: #d9d9d9; box-shadow: 6px 6px 0 #2b2b2b; }
+.jump-nav { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 24px 0; }
+.jump-tag { display: inline-block; padding: 10px 22px; background: #2b2b2b; border: 3px solid #2b2b2b; box-shadow: 3px 3px 0 #8b8b8b; font-size: 15px; font-weight: 900; color: #fff; text-decoration: none; transition: none; }
+.jump-tag:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #8b8b8b; }
+.jump-tag:hover { background: #5a5a5a; color: #fff; }
+.pixel-card { background: #fff; border: 4px solid #2b2b2b; box-shadow: 8px 8px 0 rgba(43,43,43,0.9); padding: 28px; margin: 28px 0; scroll-margin-top: 20px; }
+.pixel-card h2 { font-size: 22px; margin-bottom: 14px; color: #2b2b2b; display: inline-block; padding: 4px 14px; background: #d9d9d9; border: 3px solid #2b2b2b; box-shadow: 3px 3px 0 #2b2b2b; letter-spacing: 2px; }
+.pixel-card p { line-height: 1.9; font-size: 15px; font-weight: 500; }
+.card-toggle { display: block; width: 100%; padding: 14px 20px; background: #e6e6e6; border: 3px solid #2b2b2b; box-shadow: 4px 4px 0 #2b2b2b; font-family: inherit; font-size: 15px; font-weight: 900; color: #2b2b2b; cursor: pointer; text-align: left; letter-spacing: 1px; margin-bottom: 8px; }
+.card-toggle:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #2b2b2b; }
+.card-toggle::after { content: "▶"; float: right; transition: transform 0.2s; }
+.card-toggle.open::after { transform: rotate(90deg); }
+.card-content { display: none; border: 3px solid #2b2b2b; border-top: none; background: #fff; padding: 16px; margin-bottom: 8px; }
+.card-content.open { display: block; }
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+.card-item { border: 2px solid #2b2b2b; background: #fcfcfc; padding: 10px 12px; box-shadow: 3px 3px 0 #2b2b2b; }
+.ci-line1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ci-name { font-weight: 900; font-size: 15px; }
+.ci-star { font-size: 13px; letter-spacing: 2px; }
+.ci-cost { margin-left: auto; background: #2b2b2b; color: #fff; border: 2px solid #2b2b2b; padding: 2px 10px; font-weight: 900; font-size: 12px; }
+.ci-line2 { margin-top: 4px; font-size: 12px; color: #777; display: flex; gap: 14px; }
+.ci-num { color: #aaa; }
+.ci-ah { font-weight: 700; }
+.ci-line3 { margin-top: 6px; font-size: 13px; line-height: 1.6; color: #2b2b2b; }
+.ci-recipe { margin-top: 4px; padding: 3px 6px; font-size: 12px; color: #333; background: rgba(43,43,43,0.08); border-top: 1px dashed #2b2b2b; }
+.ci-flavor { margin-top: 4px; padding: 3px 6px; font-size: 12px; color: #444; background: rgba(217,217,217,0.5); border-top: 1px dashed #8b8b8b; font-style: italic; }
+.star-1 { color: #aaa; } .star-2 { color: #8b8b8b; } .star-3 { color: #2b2b2b; font-weight: 900; }
+@media (max-width: 640px) { .ci-name { font-size: 14px; } .ci-line3 { font-size: 12px; } }
+.lore-inner { font-size: 14px; line-height: 1.85; }
+.lore-inner h4 { font-size: 15px; margin: 14px 0 6px; color: #2b2b2b; border-left: 5px solid #2b2b2b; padding-left: 10px; letter-spacing: 1px; }
+.lore-inner p { margin: 8px 0; }
+.lore-inner ul { margin: 6px 0 10px 20px; }
+.lore-inner li { margin: 4px 0; }
+.lore-inner table.dt { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 13px; }
+.lore-inner table.dt th, .lore-inner table.dt td { border: 1px solid #2b2b2b; padding: 6px 8px; text-align: left; }
+.lore-inner table.dt th { background: #f0f0f0; }
+.lore-quote { border-left: 4px solid #2b2b2b; background: #f5f0e8; padding: 10px 14px; margin: 10px 0; font-style: italic; }
+.doc-h1 { font-size: 17px; font-weight: 900; margin: 16px 0 6px; color: #2b2b2b; border-left: 6px solid #d9d9d9; padding-left: 10px; letter-spacing: 1px; }
+.doc-h2 { font-size: 15px; font-weight: 900; margin: 12px 0 4px; color: #2b2b2b; border-left: 4px solid #8b8b8b; padding-left: 8px; }
+.doc-h3 { margin: 8px 0 2px; }
+.dhr { border: none; border-top: 3px dashed #2b2b2b; margin: 16px 0; }
+.board-art { background: #f0e8d8; border: 3px solid #2b2b2b; padding: 12px; margin: 8px 0; font-family: "Zpix", "Pixel", monospace; font-size: 13px; line-height: 1.4; white-space: pre; overflow-x: auto; color: #2b2b2b; }
+.footer { text-align: center; padding: 30px 20px; font-size: 13px; color: #666; border-top: 4px solid #2b2b2b; background: #fff; }
+</style>
+</head>
+<body>
+<div class="pixel-top"></div>
+<div class="container">
+  <div class="logo-area">
+    <div class="logo-badge"><div class="logo-title">卡师模拟器</div></div>
+    <div class="logo-sub">围棋术语 · 手谈</div>
+  </div>
+  <div class="download-section">
+    <a class="pixel-btn back-btn" href="index.html">← 返回首页下载游戏</a>
+  </div>
+  <div class="jump-nav">
+    <a class="jump-tag" href="#terms">🀄 术语图鉴</a>
+    <a class="jump-tag" href="#daquan">📚 术语大全</a>
+    <a class="jump-tag" href="#cards">🃏 卡包</a>
+  </div>
+  <div class="lore-quote" style="max-width:860px;margin:20px auto;">「执黑先行，落子无悔。」</div>
+  <div class="pixel-card" id="terms">
+    <h2>🀄 术语图鉴 · 图形版</h2>
+    <button class="card-toggle " onclick="toggleCards(this)">🀄 展开气 与 吃子（最基础）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌气 ── 棋子的命</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  一颗黑子放在棋盘上，</p>
+<p>  它上下左右四个空点，就是它的「气」。</p>
+<p>  气 = 棋子的命。</p>
+<p>  气被堵光，棋子就死了，被提走。</p>
+<p>  卡牌→ 生命值机制  难度 ★☆☆☆☆</p>
+<p>▌打吃 ── 悬在头上的刀</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ○ ○ . .</p>
+<p>  . ● ● ▲ .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  上面两颗白子，只剩下右边一口气。</p>
+<p>  黑在 ▲ 处落子，</p>
+<p>  白子最后一口气也没了，下一步就被提。</p>
+<p>  这种「下一步就能吃你」的状态，叫打吃。</p>
+<p>  卡牌→ 威胁系  难度 ★☆☆☆☆</p>
+<p>▌提子 ── 刀子落下</p>
+<p>  [棋盘-提之前]      [棋盘-提之后]</p>
+<p>  . . . . .          . . . . .</p>
+<p>  . . ○ . .          . . . . .</p>
+<p>  . . ● ● .    →    . . ● ● .</p>
+<p>  . . . . .          . . . . .</p>
+<p>  . . . . .          . . . . .</p>
+<p>  解释：</p>
+<p>  白子气数为零，</p>
+<p>  直接从棋盘上拿掉，留下一个空洞。</p>
+<p>  这个动作叫「提」。</p>
+<p>  打吃挂威胁，提子收人头。</p>
+<p>  卡牌→ 消灭系  难度 ★☆☆☆☆</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">🀄 展开行棋手法（子怎么走）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌长 ── 往前走</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . ▲ . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  黑子原样往前多放一颗，</p>
+<p>  接到自己棋子后面，战线往前推。</p>
+<p>  像排队往前走，领头羊多走一步。</p>
+<p>  卡牌→ 增益/推进系  难度 ★☆☆☆☆</p>
+<p>▌扳 ── 斜着顶回去</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ○ . .</p>
+<p>  . ● ○ . .</p>
+<p>  . . ▲ . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  黑白棋子贴身并排时，</p>
+<p>  黑在对方斜前方顶一子，卡住白子的头。</p>
+<p>  像吵架把肩膀顶上去：来，你动我试试。</p>
+<p>  卡牌→ 对抗/反击系  难度 ★★☆☆☆</p>
+<p>▌跳 ── 隔一格蹦</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  . . ▲ . .</p>
+<p>  解释：</p>
+<p>  不挨着走，隔一路下子。</p>
+<p>  步子大、逃得快，但中间留了空，</p>
+<p>  对手有机会从中切断。</p>
+<p>  卡牌→ 机动/位移系  难度 ★★☆☆☆</p>
+<p>▌尖 ── 斜着蹭</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  . . . ▲ .</p>
+<p>  解释：</p>
+<p>  斜对角走一格，</p>
+<p>  最稳健的小碎步，进可攻退可守。</p>
+<p>  像螃蟹横着挪一步，谁也不容易碰我。</p>
+<p>  卡牌→ 稳健/试探系  难度 ★★☆☆☆</p>
+<p>▌虎 ── 龇牙的防守</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . ● . ● .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  三颗黑子围住中间那个空点，</p>
+<p>  这个空点就是「虎口」。</p>
+<p>  对方若敢下进虎口，立刻被提。</p>
+<p>  守断点最狠的方式：</p>
+<p>  不是堵，是张开嘴等你进来。</p>
+<p>  卡牌→ 防守反击系  难度 ★★☆☆☆</p>
+<p>▌双 ── 双保险</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ● ● .</p>
+<p>  . . . . .</p>
+<p>  . . ● ● .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  两子并排，眼睛盯着中间那个缺口，</p>
+<p>  对方想断，断了反而被吃。</p>
+<p>  像门上装两道锁：撬完一道还有一道。</p>
+<p>  卡牌→ 加固/免疫系  难度 ★★☆☆☆</p>
+<p>▌夹 ── 左右夹击</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ○ ● .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  一颗白子，被左右两颗黑子夹在中间。</p>
+<p>  想逃？左边挨打，右边也挨打。</p>
+<p>  往哪跑都疼。</p>
+<p>  卡牌→ 夹击系  难度 ★★☆☆☆</p>
+<p>▌镇 ── 头顶压一掌</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ▲ . .</p>
+<p>  . . . . .</p>
+<p>  . . ○ . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  隔一路在对方头顶落子，</p>
+<p>  居高临下压住，不让白子往中腹出头。</p>
+<p>  像一掌按在人家头顶：你往哪冒？</p>
+<p>  卡牌→ 压制/封锁系  难度 ★★★☆☆</p>
+<p>▌压 ── 骑上去</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  . . ● . .</p>
+<p>  . . ○ . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  紧贴着，从白子正上方落子，</p>
+<p>  压住不让它往上发展。</p>
+<p>  像骑在你脖子上，你还想长个？</p>
+<p>  卡牌→ 压制系  难度 ★★☆☆☆</p>
+<p>▌顶 ── 顶牛</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ○ . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  从正面顶住对方，针尖对麦芒。</p>
+<p>  像两只羊角对顶，谁先松谁退。</p>
+<p>  卡牌→ 硬碰硬系  难度 ★★☆☆☆</p>
+<p>▌爬 ── 贴地爬</p>
+<p>  [棋盘]</p>
+<p>  . ○ ○ ○ . .</p>
+<p>  . ● ● ● . .</p>
+<p>  . . . . . .</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  沿着二路线贴着边一步步爬，</p>
+<p>  不求好看，先把地盘守住。</p>
+<p>  姿态低，但扎实。</p>
+<p>  像贴墙根儿溜，先把窝稳住。</p>
+<p>  卡牌→ 隐忍/积累系  难度 ★★☆☆☆</p>
+<p>▌粘 ── 焊上</p>
+<p>  [棋盘-断开]        [棋盘-粘住]</p>
+<p>  . ● . ○ . .       . ● . ○ . .</p>
+<p>  . ● . ○ . .   →   . ● ● ○ . .</p>
+<p>  . . . . . .       . . . . . .</p>
+<p>  解释：</p>
+<p>  两块棋中间留了个断点，</p>
+<p>  补一手把它接起来，连成一个整体。</p>
+<p>  像把裂开的木板钉上钉子，别让人拆。</p>
+<p>  卡牌→ 连接/加固系  难度 ★★☆☆☆</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">🀄 展开吃子战斗（怎么吃掉对方）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌征子 ── 之字追杀</p>
+<p>  [棋盘]</p>
+<p>  . ● ○ . . .</p>
+<p>  . . ● ○ . .</p>
+<p>  . . . ● ○ .</p>
+<p>  . . . . . .</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  黑一步一打吃，白只能沿斜线之字逃。</p>
+<p>  一路追到边线或黑棋接应处，</p>
+<p>  白子一大串全被吃掉。</p>
+<p>  像赶羊入圈，一步一逼，最后全进栏。</p>
+<p>  卡牌→ 连环追击系  难度 ★★★★★</p>
+<p>▌枷 ── 不追了，堵</p>
+<p>  [棋盘]</p>
+<p>  . . . . . .</p>
+<p>  . . ▲ . . .</p>
+<p>  ▲ . ○ . ▲ .</p>
+<p>  . . ▲ . . .</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  不贴身追，隔一路在外围架一圈网。</p>
+<p>  白子往哪逃都撞墙，插翅难飞。</p>
+<p>  像围猎：不追猎物，把整个山头圈起来。</p>
+<p>  卡牌→ 围困/封锁系  难度 ★★★★★</p>
+<p>▌扑 ── 送个饵</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ○ ○ . .</p>
+<p>  . ● ▲ . .</p>
+<p>  . ● . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  故意送白子吃自己一颗，</p>
+<p>  等它一提，棋形反而变坏，被黑反吃。</p>
+<p>  像钓鱼先扔饵：吃吧吃吧，上钩了。</p>
+<p>  卡牌→ 诱饵/陷阱系  难度 ★★★☆☆</p>
+<p>▌挖 ── 撬缝</p>
+<p>  [棋盘]</p>
+<p>  . . . . . .</p>
+<p>  . ○ . . . .</p>
+<p>  . ○ ● ○ . .</p>
+<p>  . . ▲ . . .</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  两颗白子之间强行落一颗，</p>
+<p>  把连好的棋硬撬开。</p>
+<p>  风险大：挖不好自己先死，</p>
+<p>  挖成了占大便宜。</p>
+<p>  卡牌→ 强拆系(高风险)  难度 ★★★☆☆</p>
+<p>▌双叫吃 ── 一刀两命</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ○ . ○ .</p>
+<p>  . . ▲ . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  一手棋，同时打吃左右两块白棋。</p>
+<p>  白只能救一边，另一边必死。</p>
+<p>  像一箭双雕，你救谁？</p>
+<p>  卡牌→ 双目标威胁系  难度 ★★★☆☆</p>
+<p>▌抱吃 ── 搂进怀里吃</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  ● ● ● . .</p>
+<p>  . . ○ . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  把对方一子往自己势力怀里赶，</p>
+<p>  最终逃无可逃，一口吃掉。</p>
+<p>  像张开双臂把对方搂进来：</p>
+<p>  进来了就别想走。</p>
+<p>  卡牌→ 绞杀系  难度 ★★★☆☆</p>
+<p>▌关门吃 ── 关门打狗</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . . ○ . .</p>
+<p>  ● ● ● ● .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  先把对方所有出路堵死，</p>
+<p>  再收网吃子，一个都跑不掉。</p>
+<p>  像把门一关，屋里全是你的。</p>
+<p>  卡牌→ 围杀系  难度 ★★★☆☆</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">🀄 展开死活眼劫（怎么才算活着）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌眼 ── 房子带院子</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ● .</p>
+<p>  . ● . ● .</p>
+<p>  . ● ● .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  黑子围出的那个空点，就是「眼」。</p>
+<p>  眼是气的保险，</p>
+<p>  对方想杀这块棋，必须先把眼填掉。</p>
+<p>  但只有一个眼，还是死棋。</p>
+<p>  卡牌→ 据点系  难度 ★★★☆☆</p>
+<p>▌做活 ── 两眼不灭</p>
+<p>  [棋盘]</p>
+<p>  . . . . . .</p>
+<p>  . ● ● . . .</p>
+<p>  . ● . ● ● .</p>
+<p>  . ● ● . ● .</p>
+<p>  . . . ● ● .</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  一块棋做出两个真眼，</p>
+<p>  对方永远无法同时填掉两个眼，</p>
+<p>  这块棋就彻底活了，谁也吃不掉。</p>
+<p>  两眼活 = 围棋最强保命符。</p>
+<p>  卡牌→ 永生/复活系  难度 ★★★★☆</p>
+<p>▌破眼 ── 拆院子</p>
+<p>  [棋盘-做眼前]     [棋盘-破眼后]</p>
+<p>  . ● ● . .        . ● ● . .</p>
+<p>  . ● . ● .   →   . ● ▲ ● .</p>
+<p>  . ● ● . .        . ● ● . .</p>
+<p>  . . . . .        . . . . .</p>
+<p>  解释：</p>
+<p>  对方想做眼做活，</p>
+<p>  抢先 ▲ 落子填进眼位，</p>
+<p>  眼没了，做活的计划泡汤。</p>
+<p>  专克「做活」：</p>
+<p>  想活？先把你的院子拆了。</p>
+<p>  卡牌→ 禁疗/破坏系  难度 ★★★☆☆</p>
+<p>▌劫 ── 互踢皮球</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ○ . .</p>
+<p>  . ● ○ ● .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  你提我，我提你，</p>
+<p>  但规则禁止立刻提回同一个位置，</p>
+<p>  必须去别处找「劫材」再绕回来。</p>
+<p>  像皮球你踢给我我踢给你，</p>
+<p>  谁先松劲谁吃亏。</p>
+<p>  卡牌→ 博弈系  难度 ★★★★☆</p>
+<p>▌双活 ── 谁先动谁死</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ○ . .</p>
+<p>  . ○ ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  双方互相围住，</p>
+<p>  谁先动手吃对方，自己反而先死。</p>
+<p>  干脆都别动，和平共处。</p>
+<p>  像两把枪互相顶着，谁先开枪谁没命。</p>
+<p>  卡牌→ 僵持系  难度 ★★★★☆</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">🀄 展开中盘战术（围地屠龙）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌打入 ── 深入敌后</p>
+<p>  [棋盘]</p>
+<p>  ○ ○ ○ ○ .</p>
+<p>  ○ . . ○ .</p>
+<p>  ○ . ▲ . ○</p>
+<p>  ○ ○ ○ ○ .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  白棋地盘围得好好的，</p>
+<p>  黑直接钻进中间 ▲ 点火搞事。</p>
+<p>  搅得对方鸡犬不宁，</p>
+<p>  要么活出一块，要么拖垮对方。</p>
+<p>  卡牌→ 渗透/破坏系  难度 ★★★★☆</p>
+<p>▌弃子 ── 丢车保帅</p>
+<p>  [棋盘]</p>
+<p>  . . . . .</p>
+<p>  . ● ○ . .</p>
+<p>  . . ● . .</p>
+<p>  . . . . .</p>
+<p>  . . . . .</p>
+<p>  解释：</p>
+<p>  几颗子明显救不回来了，</p>
+<p>  干脆不救，把力气花在更重要的大场。</p>
+<p>  像壁虎断尾：尾巴给你，我跑。</p>
+<p>  卡牌→ 献祭/交换系  难度 ★★★★☆</p>
+<p>▌屠龙 ── 全场最爽</p>
+<p>  [棋盘]</p>
+<p>  ○ ○ ○ ○ ○ ○</p>
+<p>  ○ . . . . ○</p>
+<p>  ○ . ○ . . ○</p>
+<p>  ○ . . . . ○</p>
+<p>  ○ ○ ○ ○ ○ ○</p>
+<p>  . . . . . .</p>
+<p>  解释：</p>
+<p>  白色这一大块棋，就是「大龙」。</p>
+<p>  被黑团团围住，眼不够、气又紧，</p>
+<p>  逃也逃不掉，整块被吃。</p>
+<p>  一步屠龙 = 直接奠定胜局。</p>
+<p>  卡牌→ 斩杀/团灭系(压轴)  难度 ★★★★★</p>
+<p>▌围空 ── 圈地盘</p>
+<p>  [棋盘]</p>
+<p>  . . ○ ○ ○ . .</p>
+<p>  . ○ . . . ○ .</p>
+<p>  . ○ ▲ . . ○ .</p>
+<p>  . ○ . . . ○ .</p>
+<p>  . . ○ ○ ○ . .</p>
+<p>  . . . . . . .</p>
+<p>  解释：</p>
+<p>  白子围出一大片空地，</p>
+<p>  这块地最后都是白的「目」。</p>
+<p>  像圈地盖房，把地皮收进自己口袋。</p>
+<p>  卡牌→ 领域/扩张系  难度 ★★★☆☆</p>
+<p>════════════════════════════════</p>
+<p>附：不适合画棋形的术语（见《围棋术语大全.txt》）</p>
+<p>════════════════════════════════</p>
+<p>布局 / 占角 / 守角 / 挂角 / 定式 / 拆 /</p>
+<p>序盘 / 中盘 / 官子 / 先手 / 后手 / 脱先 / 目 /</p>
+<p>厚势 / 实地 / 手筋 / 妙手 / 恶手 / 缓手 / 急所 /</p>
+<p>一着不慎 —— 这些用文字版大全解释（60+术语全量）</p></div></div>
+  </div>
+  <div class="pixel-card" id="daquan">
+    <h2>📚 术语大全 · 人话版</h2>
+    <button class="card-toggle " onclick="toggleCards(this)">📚 展开行棋手法（一颗子怎么走）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌长 —— 往前走</p>
+<p>原样向前多放一颗，接在自己棋子后面，延长战线。</p>
+<p>像排队往前走，领头羊多走一步。</p>
+<p>卡牌→ 增益/推进系</p>
+<p>▌立 —— 往下站</p>
+<p>朝边线方向向下长一颗，站住脚跟。</p>
+<p>像往山脚扎根，站稳了别被推。</p>
+<p>卡牌→ 防守/站位系</p>
+<p>▌扳 —— 斜着顶回去</p>
+<p>双方棋子并排贴身时，斜前方顶一子，卡住对方的头。</p>
+<p>像吵架时把肩膀顶上去：来，你动我试试。</p>
+<p>卡牌→ 对抗/反击系</p>
+<p>▌跳 —— 隔一格蹦</p>
+<p>隔一路下子，像跳房子跳一格，步子大、逃得快。</p>
+<p>卡牌→ 机动/位移系</p>
+<p>▌尖 —— 斜着蹭</p>
+<p>斜对角走一格，最稳健的小碎步，进可攻退可守。</p>
+<p>像螃蟹横着挪一步，谁也别想轻易碰我。</p>
+<p>卡牌→ 稳健/试探系</p>
+<p>▌飞 —— 跳马步</p>
+<p>隔一路再斜一格，像象棋的马走日，飞得远但不扎手。</p>
+<p>卡牌→ 远程/伸展系</p>
+<p>▌镇 —— 头顶压一掌</p>
+<p>在对方棋子上方隔一路落子，居高临下压住，限制对方出头。</p>
+<p>像一掌按在人家头顶：你往哪冒？</p>
+<p>卡牌→ 压制/封锁系</p>
+<p>▌挂 —— 侧面打招呼</p>
+<p>对方占角后，从侧翼下子找茬，准备抢地盘。</p>
+<p>像敲门问一句：这角你占，让不让点地方？</p>
+<p>卡牌→ 侵扰/开拓系</p>
+<p>▌夹 —— 左右夹击</p>
+<p>两子夹着对方一子，让对方进退两难。</p>
+<p>像两个人把你堵在巷子里，左边一拳右边一脚。</p>
+<p>卡牌→ 夹击/两难系</p>
+<p>▌靠(碰) —— 贴脸上</p>
+<p>紧贴着对方棋子落子，贴身肉搏，试探反应。</p>
+<p>像打架先贴上去，看看你慌不慌。</p>
+<p>卡牌→ 贴身战/试探系</p>
+<p>▌压 —— 骑上去</p>
+<p>从对方棋子上方落子，压住不让它往上发展。</p>
+<p>像骑在你脖子上，你还想长个？</p>
+<p>卡牌→ 压制/封锁系</p>
+<p>▌托 —— 兜底</p>
+<p>从对方棋子下方落子托住，常用于抢角。</p>
+<p>像从底下托一把，把对方掀翻。</p>
+<p>卡牌→ 逆袭/翻盘系</p>
+<p>▌顶 —— 顶牛</p>
+<p>从正面顶住对方，针尖对麦芒。</p>
+<p>像两只羊角对顶，谁先松谁退。</p>
+<p>卡牌→ 硬碰硬系</p>
+<p>▌爬 —— 贴地爬</p>
+<p>沿着二路线贴着边爬，求活求地，姿态低但实在。</p>
+<p>像贴墙根儿溜，先把窝守住。</p>
+<p>卡牌→ 隐忍/积累系</p>
+<p>▌退 —— 撤一步</p>
+<p>向后撤一子，避其锋芒，重新站稳。</p>
+<p>像打架先收拳，退一步海阔天空。</p>
+<p>卡牌→ 防御/后撤系</p>
+<p>▌粘(接) —— 焊上</p>
+<p>把断点接起来，两块棋连成一个整体。</p>
+<p>像把裂开的木板钉上钉子，别让人拆开。</p>
+<p>卡牌→ 连接/加固系</p>
+<p>▌并 —— 并排站</p>
+<p>紧挨着己方棋子并排落子，加厚力量。</p>
+<p>像两个人并排站，肩并肩谁也推不倒。</p>
+<p>卡牌→ 联防/强化系</p>
+<p>▌虎 —— 龇牙守</p>
+<p>三子围出一个空位（虎口），像老虎张嘴，谁咬进来谁挨咬。</p>
+<p>守断点的最狠方式：不是堵，是张开嘴等你。</p>
+<p>卡牌→ 防守反击系（护甲+反制）</p>
+<p>▌双 —— 双保险</p>
+<p>两子并排，中间留个虎口防断，断点焊得死死的。</p>
+<p>像门上装两道锁：你想撬？撬完还有一道。</p>
+<p>卡牌→ 加固/免疫系</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开吃子战斗（怎么吃掉对方）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌气 —— 棋子的命</p>
+<p>棋子上下的空点就是它的气。气被堵光 = 死，被提走。</p>
+<p>像人的氧气，没气就完蛋。</p>
+<p>卡牌→ 基础生命机制</p>
+<p>▌打吃 —— 悬刀</p>
+<p>下一步就能提掉对方的状态，威胁已成立，看对方应不应。</p>
+<p>像刀已经架脖子上：你看着办。</p>
+<p>卡牌→ 威胁/压制系</p>
+<p>▌提子 —— 落刀</p>
+<p>气数归零，把对方棋子拿掉，吃子兑现。</p>
+<p>像刀落下，人头落地。</p>
+<p>卡牌→ 消灭系</p>
+<p>▌征子 —— 之字追</p>
+<p>一步一打吃，逼对方只能沿斜线之字形跑，追到边线全吃。</p>
+<p>像赶羊入圈，一步一逼，最后全进栏。</p>
+<p>卡牌→ 连环追击系（算路流）</p>
+<p>▌枷 —— 不追了，堵</p>
+<p>不贴身追，而是在外围架一圈网，让对方插翅难飞。</p>
+<p>像围猎不追猎物，直接把整个山头圈起来。</p>
+<p>卡牌→ 围困/封锁系</p>
+<p>▌扑 —— 送一个</p>
+<p>故意送对方吃一子，等它提完，形反而变坏了。</p>
+<p>像钓鱼先扔块饵：吃吧吃吧，上钩了。</p>
+<p>卡牌→ 诱饵/陷阱系</p>
+<p>▌倒扑 —— 送完再提</p>
+<p>先扑送死，对方一提，反而被自己一口吞回。</p>
+<p>像钓鱼钓到鲨鱼：饵没了，鱼没了，手也没了。</p>
+<p>卡牌→ 反杀/陷阱系</p>
+<p>▌挖 —— 撬缝</p>
+<p>在对方连接点强行落子，把连好的棋撬开。</p>
+<p>像拿螺丝刀撬木板，硬拆。</p>
+<p>卡牌→ 强拆系（高风险高回报）</p>
+<p>▌双叫吃 —— 一刀两命</p>
+<p>一手棋同时打吃对方两块棋，对方只能救一个。</p>
+<p>像一箭双雕，你救谁？</p>
+<p>卡牌→ 双目标威胁系</p>
+<p>▌接不归 —— 救不回来</p>
+<p>对方棋子被紧气，想接回去时发现气不够，连着一起死。</p>
+<p>像前面的人掉水里，你去拉，自己也给拽下去。</p>
+<p>卡牌→ 连坐/扩散伤害系</p>
+<p>▌抱吃 —— 抱进怀里吃</p>
+<p>把对方一子往自己势力怀里赶，最终逃无可逃。</p>
+<p>像张开双臂把对方搂进来：进来了就别想走。</p>
+<p>卡牌→ 收缩/绞杀系</p>
+<p>▌关门吃 —— 关门打狗</p>
+<p>先堵住对方所有出路再吃，一个都跑不掉。</p>
+<p>像把门一关，屋里全是你的。</p>
+<p>卡牌→ 围杀/封死系</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开死活眼劫（怎么才算活着）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌眼 —— 房子的院子</p>
+<p>被己方棋子围住的空点，是气的保险。</p>
+<p>像房子带院子，住得舒坦。</p>
+<p>卡牌→ 特殊格/据点系</p>
+<p>▌真眼 —— 真院子</p>
+<p>对方永远堵不死的眼，是活棋的根基。</p>
+<p>像带后门的院子，堵了前门还有个后门。</p>
+<p>卡牌→ 稳定点位</p>
+<p>▌假眼 —— 假院子</p>
+<p>看着像眼，其实能被对方挤掉，是陷阱。</p>
+<p>像纸糊的院子，一捅就破。</p>
+<p>卡牌→ 欺骗/虚张声势</p>
+<p>▌做眼 —— 挖院子</p>
+<p>在自家地盘里围出眼位，为活棋做准备。</p>
+<p>像先盖个院子，再慢慢住人。</p>
+<p>卡牌→ 造点/铺垫系</p>
+<p>▌破眼 —— 拆院子</p>
+<p>抢先落子破坏对方眼位，让它做不成两眼。</p>
+<p>像趁对方还没修好墙，先把地基刨了。</p>
+<p>卡牌→ 禁疗/破坏系</p>
+<p>▌做活 —— 两眼不灭</p>
+<p>做成两个真眼，这块棋永远死不了。</p>
+<p>像家里修了两道保险门，谁也进不来。</p>
+<p>卡牌→ 永生/复活系</p>
+<p>▌净活 —— 干净地活</p>
+<p>不靠劫不靠对拼，光靠眼位就铁定活着。</p>
+<p>像户口本都办好了，谁都动不了你。</p>
+<p>卡牌→ 绝对免疫系</p>
+<p>▌死棋 —— 救不活</p>
+<p>眼位不足、气又紧，怎么走都是死。</p>
+<p>像病入膏肓，华佗来了也没用。</p>
+<p>卡牌→ 可被斩杀判定</p>
+<p>▌劫 —— 互踢皮球</p>
+<p>双方互相提子循环，规则禁止立刻提回，要先去别处找劫材。</p>
+<p>像皮球你踢给我我踢给你，谁先松劲谁亏。</p>
+<p>卡牌→ 博弈/swap系</p>
+<p>▌劫材 —— 踢皮球的筹码</p>
+<p>去别处搞事，逼对方应一手，制造提回劫的机会。</p>
+<p>像吵架时喊一嗓子"你看那边"，趁对方回头赶紧抢回来。</p>
+<p>卡牌→ 战术资源系</p>
+<p>▌双活 —— 谁先动谁死</p>
+<p>你吃我你死，我吃你我死，干脆都别动，和平共处。</p>
+<p>像两把枪互相顶着，谁先开枪谁先没命。</p>
+<p>卡牌→ 僵持/停战系</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开中盘战术（围地屠龙）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌打入 —— 深入敌后</p>
+<p>直接钻进对方地盘搞事，别人家后院点火。</p>
+<p>像跳进对方阵地里埋雷，搅得鸡犬不宁。</p>
+<p>卡牌→ 渗透/破坏系</p>
+<p>▌侵消 —— 削地皮</p>
+<p>从外围削减对方地盘，不深入，稳着毛。</p>
+<p>像在别人蛋糕边上一点点挖着吃。</p>
+<p>卡牌→ 消耗/削减系</p>
+<p>▌治孤 —— 孤军求生</p>
+<p>深入敌阵的棋，靠自己一个人做活脱险。</p>
+<p>像孤胆英雄深陷重围，凭本事活着出来。</p>
+<p>卡牌→ 绝境自救系</p>
+<p>▌腾挪 —— 灵活周旋</p>
+<p>在对方地盘里轻灵地处理弱棋，靠技巧不靠蛮力。</p>
+<p>像在刀尖上跳舞，姿势要好看还得活着。</p>
+<p>卡牌→ 技巧/周转系</p>
+<p>▌弃子 —— 丢车保帅</p>
+<p>牺牲几颗子，换更大的利益或主动权。</p>
+<p>像壁虎断尾：尾巴给你，我跑。</p>
+<p>卡牌→ 献祭/交换系</p>
+<p>▌屠龙 —— 全场最爽</p>
+<p>把对方一大块棋（大龙）整块吃掉，直接定胜负。</p>
+<p>像一把火烧了对方整座城，胜局已定。</p>
+<p>卡牌→ 斩杀/团灭系（压轴）</p>
+<p>▌围空 —— 圈地盘</p>
+<p>围住大片空地变成自己的地盘。</p>
+<p>像圈地盖房，把地皮都收进自己口袋。</p>
+<p>卡牌→ 领域/扩张系</p>
+<p>▌厚势 —— 厚实的资本</p>
+<p>棋子厚，不怕战斗，潜在力量大。</p>
+<p>像财大气粗，后面有的是底牌。</p>
+<p>卡牌→ 增益/潜力系</p>
+<p>▌实地 —— 真金白银</p>
+<p>实实在在围到的地，不是虚的势力。</p>
+<p>像已经赚到手的钱，落袋为安。</p>
+<p>卡牌→ 即战力/收益系</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开布局定式（开局怎么下）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌布局 —— 开盘铺路</p>
+<p>开局阶段，双方各自抢占大场，为后面战斗打基础。</p>
+<p>像盖楼先打地基，地基好楼才稳。</p>
+<p>卡牌→ 开局/发育系</p>
+<p>▌占角 —— 抢墙角</p>
+<p>开局先占角，角上最容易围空（两条边帮忙）。</p>
+<p>像抢好地段的店铺，位置决定生意。</p>
+<p>卡牌→ 先手/抢点系</p>
+<p>▌守角 —— 守后院</p>
+<p>占角之后再补一手，角就固若金汤。</p>
+<p>像店铺招了保安，谁也抢不走。</p>
+<p>卡牌→ 加固/据守系</p>
+<p>▌挂角 —— 踢馆</p>
+<p>对方占角后从侧翼下子捣乱，不让它安心守。</p>
+<p>像踢馆：你这角开张，我偏来搅和。</p>
+<p>卡牌→ 侵扰/压制系</p>
+<p>▌定式 —— 标准套路</p>
+<p>角部战斗的公认最佳应对，双方各取所需。</p>
+<p>像武林秘籍的标准招式，练熟了不吃亏。</p>
+<p>卡牌→ 稳定收益/公式套路</p>
+<p>▌拆 —— 沿边展开</p>
+<p>沿着边线隔几路展开，建立根据地。</p>
+<p>像沿街开店，一间接一间铺开。</p>
+<p>卡牌→ 铺场/展开系</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开对局阶段（一盘棋怎么走完）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌序盘 —— 开局</p>
+<p>前几十手，布局抢地的阶段。</p>
+<p>卡牌→ 前期</p>
+<p>▌中盘 —— 激战</p>
+<p>战斗最激烈的阶段，攻防转换的中心。</p>
+<p>卡牌→ 中期(核心轮)</p>
+<p>▌官子 —— 收尾算账</p>
+<p>棋局接近尾声，边界上一点一点算目数收地。</p>
+<p>像散场清点：最后一分钱也要拿稳。</p>
+<p>卡牌→ 终局/结算系</p>
+<p>▌先手 —— 抢气</p>
+<p>下了这手对方必须应，主动权在自己手里。</p>
+<p>像下棋抢到先出牌：主动权=赢一半。</p>
+<p>卡牌→ 主动权/节奏系</p>
+<p>▌后手 —— 跟牌</p>
+<p>下了这手对方可以不理，先机让出去。</p>
+<p>像被动接招，别人出什么你只能跟。</p>
+<p>卡牌→ 被动/响应系</p>
+<p>▌脱先 —— 我就不理</p>
+<p>对方打你的棋，你偏去别处下更重要的一手。</p>
+<p>像别人出手你不接，先去办更大的事。</p>
+<p>卡牌→ 跳出/换线系</p>
+<p>▌目 —— 算分的格子</p>
+<p>围住的空点就是目，终局按目数定胜负。</p>
+<p>像计分的格子，多一点是一点。</p>
+<p>卡牌→ 分数/胜利点</p>
+<p>▌接不归(补) —— 终局陷阱</p>
+<p>（见二·接不归）连接时气不够反而连死，官子常考。</p>
+<p>卡牌→ 连坐伤害</p>
+<p>════════════════════════════════</p></div></div><button class="card-toggle " onclick="toggleCards(this)">📚 展开高手词汇（炫技向）</button>
+<div class="card-content"><div class="lore-inner"><p>════════════════════════════════</p>
+<p>▌手筋 —— 妙手</p>
+<p>局部最漂亮、最有效的招法，高手过招的分水岭。</p>
+<p>像武侠里的杀招，一招定乾坤。</p>
+<p>卡牌→ 关键牌/技巧牌</p>
+<p>▌妙手 —— 神来之笔</p>
+<p>出人意料的绝妙一手，打破常规定式。</p>
+<p>像棋盘上凭空飞来一剑，所有人都看傻了。</p>
+<p>卡牌→ 翻盘/惊喜牌</p>
+<p>▌恶手 —— 臭棋</p>
+<p>明显吃亏的坏棋，送别人机会。</p>
+<p>像自己送上门挨打：这手棋得记大过。</p>
+<p>卡牌→ 失误/负效果牌</p>
+<p>▌缓手 —— 慢半拍</p>
+<p>不急的棋，该出手时没出手，节奏丢了。</p>
+<p>像开会该你发言你沉默了，白白错过。</p>
+<p>卡牌→ 延迟/减效牌</p>
+<p>▌急所 —— 必争点</p>
+<p>当前局势最关键的一手，谁抢到谁占优。</p>
+<p>像战场上那个高地，谁占谁赢。</p>
+<p>卡牌→ 高价值/必争牌</p>
+<p>▌一着不慎 —— 满盘皆输</p>
+<p>一步棋走错，整盘全崩。</p>
+<p>像多米诺骨牌，一张倒全倒。</p>
+<p>卡牌→ 高风险/连挫触发</p>
+<p>════════════════════════════════</p>
+<p>备注</p>
+<p>════════════════════════════════</p>
+<ul><li>共 60+ 术语，六大分类 + 高手词汇，覆盖常用围棋术语</li><li>每个术语的「卡牌→」是后续卡包设计的映射方向草案</li><li>术语解释优先「人话+比喻」，棋理准确但不用棋谱图</li><li>解锁机制候选：对局解锁 / 段位梯度解锁 / 收集进度奖励（待定）</li></ul></div></div>
+  </div>
+  <div class="pixel-card" id="cards">
+    <h2>🃏 卡包 · 手谈（16张）</h2>
+    <button class="card-toggle" onclick="toggleCards(this)">🃏 展开《围棋术语》卡包（16张）</button>
+<div class="card-content"><div class="card-list">
+<div class="card-item"><div class="ci-line1"><span class="ci-name">纵横·十九道</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#1</span><span class="ci-ah">攻 0 · 命 4</span></div><div class="ci-line3">【白板】<div class="ci-flavor">十九路棋盘，三百六十一交叉点。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">黑子·先行</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#2</span><span class="ci-ah">攻 2 · 命 1</span></div><div class="ci-line3">【白板】<div class="ci-flavor">执黑先行，第一颗落在星位。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">白子·贴目</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#3</span><span class="ci-ah">攻 1 · 命 2</span></div><div class="ci-line3">【白板】<div class="ci-flavor">白棋后手，贴还七目半。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">棋盒·云子</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 1</span></div><div class="ci-line2"><span class="ci-num">#4</span><span class="ci-ah">攻 0 · 命 3</span></div><div class="ci-line3">【白板】<div class="ci-flavor">云子温润，落盘有声。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">棋谱·残局</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#5</span><span class="ci-ah">攻 2 · 命 2</span></div><div class="ci-line3">【白板】<div class="ci-flavor">「此形先手活，后手死。」</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">棋钟·读秒</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#6</span><span class="ci-ah">攻 1 · 命 3</span></div><div class="ci-line3">【白板】<div class="ci-flavor">还剩十秒，落子如飞。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">气·紧气</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#7</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】召唤成功时：+1攻击（己方单体）<div class="ci-recipe">🧬 纹路配方：TR01→A20(1)/T03</div><div class="ci-flavor">棋子的命，叫气。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">做眼·护气</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 2</span></div><div class="ci-line2"><span class="ci-num">#8</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】召唤成功时：恢复2点生命（己方单体）<div class="ci-recipe">🧬 纹路配方：TR01→A02(2)/T03</div><div class="ci-flavor">围出一个眼，留口气。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">先手·抢点</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#9</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】己方回合开始时：抽1张牌（己方单体）<div class="ci-recipe">🧬 纹路配方：TR12→A09(1)/T03</div><div class="ci-flavor">先手者，握主动权。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">征子·长驱</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#10</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】被攻击时：造成2点伤害（敌方单体）<div class="ci-recipe">🧬 纹路配方：TR10→A01(2)/T02</div><div class="ci-flavor">之字追杀，一步一打吃。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">罩·封网</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#11</span><span class="ci-ah">攻 3 · 命 2</span></div><div class="ci-line3">【起效】攻击宣言时：+1攻击（己方单体）<div class="ci-recipe">🧬 纹路配方：TR09→A20(1)/T03</div><div class="ci-flavor">一网兜头，插翅难飞。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">虎·虎口</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#12</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】召唤成功时：禁用效果（敌方单体）<div class="ci-recipe">🧬 纹路配方：TR01→A33/T02</div><div class="ci-flavor">三子成虎口，敢入者提。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">打入·搅局</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 5</span></div><div class="ci-line2"><span class="ci-num">#13</span><span class="ci-ah">攻 0 · 命 5</span></div><div class="ci-line3">【起效】被攻击时：恢复2点生命（己方单体）<div class="ci-recipe">🧬 纹路配方：TR10→A02(2)/T03</div><div class="ci-flavor">深入敌后，火中取栗。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">做活·两眼</span><span class="ci-star star-1">★</span><span class="ci-cost">能量 3</span></div><div class="ci-line2"><span class="ci-num">#14</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】己方回合开始时：+1攻击（己方单体）<div class="ci-recipe">🧬 纹路配方：TR12→A20(1)/T03</div><div class="ci-flavor">两眼成活，立于不败。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">厚势·蓄力</span><span class="ci-star star-2">★★</span><span class="ci-cost">能量 4</span></div><div class="ci-line2"><span class="ci-num">#15</span><span class="ci-ah">攻 0 · 命 0</span></div><div class="ci-line3">【起效】己方回合结束时：+1生命（己方全体）<div class="ci-recipe">🧬 纹路配方：TR14→A21(1)/T05</div><div class="ci-flavor">棋厚则不惧战。</div></div></div>
+<div class="card-item"><div class="ci-line1"><span class="ci-name">屠龙·大龙</span><span class="ci-star star-3">★★★</span><span class="ci-cost">能量 10</span></div><div class="ci-line2"><span class="ci-num">#16</span><span class="ci-ah">攻 4 · 命 4</span></div><div class="ci-line3">【起效】己方回合开始时：+2攻击（己方全体）<div class="ci-recipe">🧬 纹路配方：TR12→A20(2)/T05</div><div class="ci-flavor">杀大龙，定胜负。</div></div></div>
+</div></div>
+  </div>
+  <div class="download-section">
+    <a class="pixel-btn back-btn" href="index.html">← 返回首页下载游戏</a>
+  </div>
+</div>
+<div class="footer">© 2026 卡师模拟器 · 围棋术语 · 16张卡全部公式验证</div>
+<script>
+function toggleCards(btn) { btn.classList.toggle('open'); var content = btn.nextElementSibling; content.classList.toggle('open'); }
+</script>
+</body>
+</html>
